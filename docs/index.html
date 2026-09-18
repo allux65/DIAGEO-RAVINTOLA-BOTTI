@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1B1713; --bg-raised: #221D18; --ink: #EDE3D3; --ink-dim: #A99A86;
-    --copper: #C08A4E; --line: #3A322A;
+    --bg: #100D0A; --bg-raised: #1A1510; --ink: #F2E9DA; --ink-dim: #9C8D78;
+    --copper: #C9A227; --wine: #8B3A3A; --line: #2B241D;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -20,7 +20,7 @@
   }
   a { color: inherit; }
   .wrap { max-width: 800px; margin: 0 auto; padding: 48px 24px 80px; }
-  header { margin-bottom: 36px; }
+  header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
   .kicker { color: var(--copper); font-size: 13px; margin-bottom: 8px; }
   h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px, 5vw, 40px); line-height: 1.1; max-width: 16ch; }
   .subhead { color: var(--ink-dim); font-size: 15px; margin-top: 10px; max-width: 46ch; }
@@ -78,30 +78,29 @@
 
   /* Drinkki */
   .drink-wrap { margin-top: 28px; }
-  .drink { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; padding: 22px; }
-  .drink-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; margin-bottom: 6px; }
-  .drink-note { color: var(--ink-dim); font-size: 14px; margin-bottom: 14px; max-width: 56ch; }
-  .drink-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; font-size: 13.5px; }
-  .drink-specs div span { display: block; color: var(--ink-dim); font-size: 11.5px; margin-bottom: 2px; }
+  .drink-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .drink { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }
+  .drink-tag {
+    display: inline-block; font-size: 11px; color: var(--copper); border: 1px solid var(--copper);
+    border-radius: 999px; padding: 2px 9px; margin-bottom: 10px;
+  }
+  .drink-name { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; margin-bottom: 6px; }
+  .drink-note { color: var(--ink-dim); font-size: 13.5px; margin-bottom: 14px; }
+  .drink-specs { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+  .drink-specs div span { display: block; color: var(--ink-dim); font-size: 11px; margin-bottom: 2px; }
 
   footer { color: var(--ink-dim); font-size: 12.5px; margin-top: 32px; }
-
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --bg: #FBF8F2; --bg-raised: #F2ECE0; --ink: #24201A; --ink-dim: #6B6154; --copper: #9C6A34; --line: #E2D9C8;
-    }
-  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="kicker">Päivitetty 18.09.2026 13:57 UTC</div>
-    <h1>Diageo & ravintola-ala -briiffi</h1>
-    <p class="subhead">Nopea yleiskuva alta, tarkemmat listat klikkaamalla auki.</p>
+    <div class="kicker">Päivitetty 18.09.2026 14:06 UTC</div>
+    <h1>Diageo & Alcohol Industry News</h1>
+    <p class="subhead">Brändiuutiset, kilpailijat ja ravintolakentän liikkeet samassa näkymässä.</p>
   </header>
 
-  <div class="trending"><span class="trending-label">Nousussa tällä viikolla</span><span class="chip">Guinness <span class="chip-count">4</span></span></div>
+  <div class="trending"><span class="trending-label">Nousussa tällä viikolla</span><span class="chip">Guinness <span class="chip-count">5</span></span><span class="chip">Johnnie Walker <span class="chip-count">2</span></span><span class="chip">Tanqueray <span class="chip-count">2</span></span></div>
 
   <div class="search-wrap">
     <input type="text" id="search" placeholder="Hae brändi, tapahtuma tai aihe...">
@@ -109,43 +108,47 @@
 
   <div class="highlights">
     
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMiigJBVV95cUxNcTdtendaS1BuX04xQnprWnd5dndkdm1keThGMU0yemlEVzVYbUh3VzFJMGlNR2tJQlRBQ2dHQmFsSlZqNnlxdEdIMjZ4eXRydjZzektmaTU2ZWI2SV8wNEJKRmZsOFdrckI2dEREbENTLUtUaUpOeFhzUHI0RmZyQjNSZVBQX2dzNGstOFZkUFVqRTVHYzFWNmZDN0hwMFI1cExFbDVxZmc5SXhIemM3RDRqREw0SUM1QnBJc2Y2cGdmOVZtNTdHcFFOOG0yRTlBdHpxTGl3cVdQWE1QQ2o0ZEN4cFJ1OE9YUk9YTzVWdGxGb29GNDk5YWZkd2JDX0RYa0FteVEyWHJGdw?oc=5" target="_blank" rel="noopener" style="--dot: #C08A4E">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMiekFVX3lxTE5fY3ZJdW9PSWVrcEFmX2dZMGtxOXRHdEp3enNka0RDYnVrYVRQUTBMbTNRVmdTX2FBM0s5SDNfZUNtT0FITzNmLURPdTByNGlwZkpjal94V0Z3bXUzTnRjNVFBeVVSN0Z6dUtJbjFfcmR1VlVWQ0JndW5B?oc=5" target="_blank" rel="noopener" style="--dot: var(--wine)">
+          <span class="hl-label">Brändiuutiset: uutuudet, kasvot &amp; julkaisut</span>
+          <span class="hl-title">Black Cask, Johnnie Walker&#x27;s First Permanent Release in 15 Years, Fuses Scotch and Bourbon - VinePair</span>
+        </a>
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMiigJBVV95cUxNcTdtendaS1BuX04xQnprWnd5dndkdm1keThGMU0yemlEVzVYbUh3VzFJMGlNR2tJQlRBQ2dHQmFsSlZqNnlxdEdIMjZ4eXRydjZzektmaTU2ZWI2SV8wNEJKRmZsOFdrckI2dEREbENTLUtUaUpOeFhzUHI0RmZyQjNSZVBQX2dzNGstOFZkUFVqRTVHYzFWNmZDN0hwMFI1cExFbDVxZmc5SXhIemM3RDRqREw0SUM1QnBJc2Y2cGdmOVZtNTdHcFFOOG0yRTlBdHpxTGl3cVdQWE1QQ2o0ZEN4cFJ1OE9YUk9YTzVWdGxGb29GNDk5YWZkd2JDX0RYa0FteVEyWHJGdw?oc=5" target="_blank" rel="noopener" style="--dot: #8C6B3F">
           <span class="hl-label">Diageo Suomessa</span>
           <span class="hl-title">Juomajätti Diageo tekee historiansa suurimman teknologiainvestoinnin standardoidakseen ja kehittääkseen toimintatapojaan maailmanlaajuisesti - SAP News Center</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMihAFBVV95cUxOZmUwLXNqSURhUDJ2eTB0UzdGVUFVLXNVVjhlSkhnUEk2MXJwWTB4bEFmajdrVmhRbUNpMFktVk9mRUVDbXBNcGl1OTJsYlY2Y1RsZWRydkhKRl9tVmxPZzFMNnk4dWRyYXNHVUVqNE5Hc21KNXZhVGhUX3pPbTlNZUVTbjU?oc=5" target="_blank" rel="noopener" style="--dot: #6B7355">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMihAFBVV95cUxOZmUwLXNqSURhUDJ2eTB0UzdGVUFVLXNVVjhlSkhnUEk2MXJwWTB4bEFmajdrVmhRbUNpMFktVk9mRUVDbXBNcGl1OTJsYlY2Y1RsZWRydkhKRl9tVmxPZzFMNnk4dWRyYXNHVUVqNE5Hc21KNXZhVGhUX3pPbTlNZUVTbjU?oc=5" target="_blank" rel="noopener" style="--dot: #C9A227">
           <span class="hl-label">Diageo maailmalla</span>
           <span class="hl-title">Workers at Diageo’s largest distillery to go on strike as demand slumps - Financial Times</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxQLXVLTnJNenU3YzZzUWJDN3ZiTmc1SFJpSDlESDlwR00ycllqdUVNMU5tRUp2c0pNUDdZcFpEaUdUVW9MaFNMcVlLcjZsYjZqLU9jdkZUdW1NUDlVMnNreFVYcHZac1A1RkJKMVJqSFhBV2JnQ2NPS0k2dHRmZEFWSG9UaUxROG9DSnhN?oc=5" target="_blank" rel="noopener" style="--dot: #8A6B8A">
-          <span class="hl-label">Tarkkailtavat brändit</span>
-          <span class="hl-title">Diageo proposes 150 job cuts in Ireland - thespiritsbusiness.com</span>
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMinAFBVV95cUxOd1FDMUpHRlBubVJ5Unl2blItVWJrMTVtX2F6aklsd3pueTBEWVUwVEhPYmtKMmlrSVRmQlpnaXZTV3pxdkFjT1FvNXg4ZXVNLW9PWEQyX0FaVllwby1ucUpjT0I4OGRDV2pMMzRNNl95aFQ2cU9rWHFyLWFkWUctZkt1NThkUWtVNTVxVWFCZkFSQlM3OWNqN1BTMVQ?oc=5" target="_blank" rel="noopener" style="--dot: #8C6B3F">
+          <span class="hl-label">Muut tarkkailtavat brändit</span>
+          <span class="hl-title">Article - Lovin Dublin</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMipgFBVV95cUxNRDR6M2hEbVVDc2lnbkxjZ1F3Z09RMlVVbHRNUUhrTjZydVlzNHdQbG85d3NraWxxbjJOU01KamltUno4VEtOUWtidS1rQXMxQ0xpMTdBeHVmUnZNZzBXbHhKRldfWlhYT1QwNTdkTUc0bjluVnRUWWpOVmRibk0ySXpTVXoxaXk3LXozcnd3cS11UnpNYWt6eUw5Z2tCWTFYRnJSSVR3?oc=5" target="_blank" rel="noopener" style="--dot: #4E7A94">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMipgFBVV95cUxNRDR6M2hEbVVDc2lnbkxjZ1F3Z09RMlVVbHRNUUhrTjZydVlzNHdQbG85d3NraWxxbjJOU01KamltUno4VEtOUWtidS1rQXMxQ0xpMTdBeHVmUnZNZzBXbHhKRldfWlhYT1QwNTdkTUc0bjluVnRUWWpOVmRibk0ySXpTVXoxaXk3LXozcnd3cS11UnpNYWt6eUw5Z2tCWTFYRnJSSVR3?oc=5" target="_blank" rel="noopener" style="--dot: #C9A227">
           <span class="hl-label">Kilpailijat</span>
           <span class="hl-title">Brown-Forman Announces $500 Million Debt Offering (September 17, 2026) - Brown-Forman</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMifkFVX3lxTE85MTRTeV9kTmVDRGxuX3Z5MEhKZmQ2cXFvSmpxbzRmRUFfTDA4X2Jfb05Fek8xamYwX0s3TEY3RmlsYXhtTkJEdlNGMlFfZi05TTdLQmtxVElrM3J5THluRmE4LUM3QzR2YWpkVTk3UHQ1dEZwQ2FMRUxhd2hyZw?oc=5" target="_blank" rel="noopener" style="--dot: #C08A4E">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMifkFVX3lxTE85MTRTeV9kTmVDRGxuX3Z5MEhKZmQ2cXFvSmpxbzRmRUFfTDA4X2Jfb05Fek8xamYwX0s3TEY3RmlsYXhtTkJEdlNGMlFfZi05TTdLQmtxVElrM3J5THluRmE4LUM3QzR2YWpkVTk3UHQ1dEZwQ2FMRUxhd2hyZw?oc=5" target="_blank" rel="noopener" style="--dot: #8C6B3F">
           <span class="hl-label">Uudet ravintolat ja baarit Suomessa</span>
           <span class="hl-title">Tässä ovat Suomen Michelin-tähtiravintolat – Uusi ravintola listalle - Kauppalehti</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMie0FVX3lxTE9TSmVVa09PaGQwR3JYODdncWZVVDJqTlJJdDRvSzlGdUtOanlNdDZKVXFMUkRwRkNPZ0p2QzZOdlhnbmludV85cVpUTEFqQy1aRC03MWtpclZKZmR4WFBLcDRUcHo0Z0FlLUJmS1RTTk9LNFhzUTBxbnpmMA?oc=5" target="_blank" rel="noopener" style="--dot: #6B7355">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMie0FVX3lxTE9TSmVVa09PaGQwR3JYODdncWZVVDJqTlJJdDRvSzlGdUtOanlNdDZKVXFMUkRwRkNPZ0p2QzZOdlhnbmludV85cVpUTEFqQy1aRC03MWtpclZKZmR4WFBLcDRUcHo0Z0FlLUJmS1RTTk9LNFhzUTBxbnpmMA?oc=5" target="_blank" rel="noopener" style="--dot: #C9A227">
           <span class="hl-label">Suomen ravintola-alan uutiset</span>
           <span class="hl-title">Näitä töitä eivät suomalaiset tee, sanoo etujärjestö – Ravintola-alalla outo tilanne: ”Jos heitä ei ole, ravintolat eivät pyöri lainkaan” - Uusi Suomi</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMickFVX3lxTFBBblFlT1M3enpqRWhrZnhVNm1kdzdJRDlSTUV0aURUelZxSmxLbUlBRm9kMWc0amJ3a25KeEtSUy1ibzVJWmVHQy1sTGZwR0sxRllnSFJpZ20tSUt0VXdVbzVCdFBEOW1XNWhCbVJPMFM2dw?oc=5" target="_blank" rel="noopener" style="--dot: #8A6B8A">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMickFVX3lxTFBBblFlT1M3enpqRWhrZnhVNm1kdzdJRDlSTUV0aURUelZxSmxLbUlBRm9kMWc0amJ3a25KeEtSUy1ibzVJWmVHQy1sTGZwR0sxRllnSFJpZ20tSUt0VXdVbzVCdFBEOW1XNWhCbVJPMFM2dw?oc=5" target="_blank" rel="noopener" style="--dot: #8C6B3F">
           <span class="hl-label">Cocktail-trendit maailmalla</span>
           <span class="hl-title">Gen Z Is Drinking More. Here’s What They’re Reaching for Now - Food &amp; Wine</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxPT2pLelI3ZlhrSW5pYU9mX1RoakRpVzVCNU9nWTRTV09DZi1LVnFtakw2MFJZa1ZZSmlOdkJjZjJ2VDd6QlNHQlZiamF6ZERfbS1LNHNqRy1USjVVWkI1NW96ZGpPMmZhMXl0OTZ5VzNiWXNGclItWG9oS0psUU9EOV96cm1fWFZUZW53?oc=5" target="_blank" rel="noopener" style="--dot: #4E7A94">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxPT2pLelI3ZlhrSW5pYU9mX1RoakRpVzVCNU9nWTRTV09DZi1LVnFtakw2MFJZa1ZZSmlOdkJjZjJ2VDd6QlNHQlZiamF6ZERfbS1LNHNqRy1USjVVWkI1NW96ZGpPMmZhMXl0OTZ5VzNiWXNGclItWG9oS0psUU9EOV96cm1fWFZUZW53?oc=5" target="_blank" rel="noopener" style="--dot: #C9A227">
           <span class="hl-label">Väkevien alan uutiset ja ennusteet</span>
           <span class="hl-title">Global Drinks Industry Forecast: Trends, Challenges &amp; Innovations - Mintel</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPVHZnY05FeGZFQWJyVjRiVkYxQVJsYVo1R2E5UjhIQThfREFtZE5UYUFBYVlWQ2h3R0FvaHpZRnFqMkZ2dFpwek9CMVp4VG5MV25VWnZLR0w2WnNRRVZyemlaT0ExWi1SZzBnT3NLUlRZd3Iyak9uaXpkSnFhdjFXZEx4NzhwbVhfU0VJbF9EVm1vVVRxYnkweE40WVBDNThETUV3dDVmbUdaZ0pLQUFILQ?oc=5" target="_blank" rel="noopener" style="--dot: #C08A4E">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPVHZnY05FeGZFQWJyVjRiVkYxQVJsYVo1R2E5UjhIQThfREFtZE5UYUFBYVlWQ2h3R0FvaHpZRnFqMkZ2dFpwek9CMVp4VG5MV25VWnZLR0w2WnNRRVZyemlaT0ExWi1SZzBnT3NLUlRZd3Iyak9uaXpkSnFhdjFXZEx4NzhwbVhfU0VJbF9EVm1vVVRxYnkweE40WVBDNThETUV3dDVmbUdaZ0pLQUFILQ?oc=5" target="_blank" rel="noopener" style="--dot: #8C6B3F">
           <span class="hl-label">Suomen alan tapahtumat</span>
           <span class="hl-title">HDF Week: Viikon verran cocktaileja kympillä ympäri Helsinkiä - Time Out Worldwide</span>
         </a>
-        <a class="hl-card" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxQVGFSMW1CQUFEMWxFel9TZHFxMlQxVTFtcUNtZWwxeTBrLWh5dktpMG0ySDBHREdfLTFodUtVY19nbDRtSEpNZl9RN0lkYjRKSnRYQTR3RlJub09OODZFWjRZanFOQnk4TjlfQkJnTGgzOWM5emFRQS1TZjlKb0Iwckw2UVVCSUlLeS1ONDl5dS02MkpFMjlpV0tSTkk5Tk4tT3htVEYyOGFheGNkb0t3TUNNdXhFQ1ItT0tRSw?oc=5" target="_blank" rel="noopener" style="--dot: #6B7355">
+        <a class="hl-card" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxQVGFSMW1CQUFEMWxFel9TZHFxMlQxVTFtcUNtZWwxeTBrLWh5dktpMG0ySDBHREdfLTFodUtVY19nbDRtSEpNZl9RN0lkYjRKSnRYQTR3RlJub09OODZFWjRZanFOQnk4TjlfQkJnTGgzOWM5emFRQS1TZjlKb0Iwckw2UVVCSUlLeS1ONDl5dS02MkpFMjlpV0tSTkk5Tk4tT3htVEYyOGFheGNkb0t3TUNNdXhFQ1ItT0tRSw?oc=5" target="_blank" rel="noopener" style="--dot: #C9A227">
           <span class="hl-label">Alan tapahtumat maailmalla</span>
           <span class="hl-title">This East Village drinks den was just named the best cocktail bar in America - Time Out Worldwide</span>
         </a>
@@ -153,7 +156,57 @@
 
   
         <details class="section" open>
-          <summary class="section-head" style="--dot: #C08A4E">
+          <summary class="section-head" style="--dot: var(--wine)">
+            <span class="dot"></span>
+            <h2>Brändiuutiset: uutuudet, kasvot &amp; julkaisut</h2>
+            <span class="count">10</span>
+          </summary>
+          <div class="section-body">
+            
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiekFVX3lxTE5fY3ZJdW9PSWVrcEFmX2dZMGtxOXRHdEp3enNka0RDYnVrYVRQUTBMbTNRVmdTX2FBM0s5SDNfZUNtT0FITzNmLURPdTByNGlwZkpjal94V0Z3bXUzTnRjNVFBeVVSN0Z6dUtJbjFfcmR1VlVWQ0JndW5B?oc=5" target="_blank" rel="noopener">Black Cask, Johnnie Walker&#x27;s First Permanent Release in 15 Years, Fuses Scotch and Bourbon - VinePair</a>
+          <p class="item-meta">VinePair · 26.2. klo 08:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMijAFBVV95cUxQZEZmNnp5TGpXSXE5UkdIb0g0WFk3ZmZ4TGk5TzFNOG82WVFXQ1hDSnlCa2FGcjd1Vy16T3MwaHZ1aWdIZnQyMlcxRUlORHZ2c1FJNldpZ2JyZEMzYVlJblFRcDZSejZ6ZlpyeHhGLVpsMGZqRmZsYjBRMzVIS2lVTkJWT1BqSDF0Q0pQOQ?oc=5" target="_blank" rel="noopener">Johnnie Walker’s New $35 Scotch Turns Up the Sweetness — Without Losing the Smoke - Food &amp; Wine</a>
+          <p class="item-meta">Food &amp; Wine · 26.2. klo 08:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPLXJlVGluUkhCeWVfWm5pMUxoclBld05rOHhYZDNwRW93bV9DRGEwMnQxOHRwNTF4alJGS3g2RE5Ta3lScVZRcTdhR1ZmcnFFYnZfdDA5c1dRWTB5cWk2R0pyU2NnSXMxRVBjZlc2YzUtbk14alhEeEpDNGs3a2laUEdNUEo2QURwRGlxNXpIWjdia0h2TE15dTJib25qa2pKeGpJMnlpNF9DYTZtTHpLMElVcHpNeHfSAbwBQVVfeXFMTzJvaW9DRVZUUnVFWklhUGZPTjItVUlKelNnUzVNSW9SMnllejhxdlB0SnJwejJ2YzhwUENud2VTN1lmTzZhWnRrR3Bpd2J5bkZkS3h0WXdHSHNqRzdrR05CM2NwMnlqOWxKZ2djZHN2RHRmR1VwYXNScWxIaUZRSWFfR3pIeVN3a011aVFTZkFDdC1LVTR2QjdqMFpGMkdKelBUbVZqRHhrTVBaa0p0RlVITnEtS2FOci1iQ04?oc=5" target="_blank" rel="noopener">Pitbull Breaks BST Hyde Park Attendance Record as Fans Set Guinness World Record - That Grape Juice.net</a>
+          <p class="item-meta">That Grape Juice.net · 11.7. klo 07:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPdHhUQXhMYjdYVDd0Q3BueXZoeGtlSm5STktORkZZdTA3TnhpUDZ4N2RjbGVPcWZKaHRiMFUycGxxSF84OE1HdHNINFVmdnc2U0pERnFCSGY2WWVSY2F6VDJWd1dFa1dpOG10Y2R5aFJVWWVzT3dOekd4Q04yNU0tRW05X2UtMzR5?oc=5" target="_blank" rel="noopener">5 New Buzz-Free Beers That Will Not Disappoint - American Craft Beer</a>
+          <p class="item-meta">American Craft Beer · 15.1. klo 08:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMia0FVX3lxTE1iQjNVSHJlZ1llSjBVTHctRHZzT1JCeUE3Y045bHhCZDdvU05OLThyUG1oR0JZbGxCUmpldW56YTBISGJEaU4wZzdkUTU3a0NkU1g3Q3lIRlRFMU84OUE1akc4SjAtZGVabnF3?oc=5" target="_blank" rel="noopener">Decadent Chocolate-Infused Liquors: Baileys Chocolate Liquor Features a Rich and Velvety… - Trend Hunter</a>
+          <p class="item-meta">Trend Hunter · 9.12. klo 08:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5hQVgtUjl2NEdrT3FPUURmUm9xakNqREMxVVp2SnRyY2ZaSE9rOUdRSFZid3NteFlqVGZ6Ny1HMTFUVzRyRTQxSUJPMmg5NFVMSUpMRGtpZ2hCdWthUUFpT1FIellsWEhKSDZjUw?oc=5" target="_blank" rel="noopener">Baileys Chocolate Liquor has arrived in Canada just in time for Adult-o-ween - Daily Hive</a>
+          <p class="item-meta">Daily Hive · 28.10. klo 07:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxPaU5JblNYbkZkYVFVMmVWd21yY2EzUVZPYWJtSC12a0hFNjhGMnJrZEhOWVdNQnVXMXpHd0FYNzdudEg3Sm9TRFRtSXE5dlozUHJvOWpWRG53YW80NjZhQ1ZRbm1IWUk0ZEd5bVdfemxpbHQxby1STElEZVB4V0FSaUZTMEpua1gyX1JF?oc=5" target="_blank" rel="noopener">Tanqueray Releases New Flor de Sevilla Gin &amp; Soda RTD - Cocktails Distilled</a>
+          <p class="item-meta">Cocktails Distilled · 2.3. klo 07:15</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMilwFBVV95cUxOSmR4MU9aQVRZVURuUjZIb1o0RWdjUG51Q1ZhX2pOeGt3MzBwQjhyeWY2Y2k3M19xOUVBa3Vubmw1ZS1fdFF2QWFXbmNILWtvVXpzdGtUR09oZFdfMFFWcmdPVjV2elVPOWVnNzEtS3lVdUZ1TjM2YjZHaEppZmd4VDV5Yy1CN1l6WWlwUG56ZmZEb3BBTllF?oc=5" target="_blank" rel="noopener">Tanqueray Blackcurrant Royale launches on Amazon - The Spirits Business</a>
+          <p class="item-meta">The Spirits Business · 8.2. klo 08:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTFA2eGFsaUljVTF4Wjd0ODJCZmJ4RmhXX0k5dmd6dmo1eDRPakxDa3AtOTlrSjZIcDhEb2xDZmZjbWo1R3hFVWlvRnQ4OVY3SWxqNmtPYUZGMm4xZFRvdmJNeE5tNGo?oc=5" target="_blank" rel="noopener">[Today’s New Release] Luxury Tequila... &quot;Don Julio 1942 Year of the Horse Edition&quot; - 아시아경제</a>
+          <p class="item-meta">아시아경제 · 22.1. klo 08:00</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiywFBVV95cUxQWXhsQlhiZ2dVNjVKTmdPX2FtclZ0elQ5OHNWdTNyd0djWGwtWDc0NVlUMmw0bUlUT2NGa2NKdFZDYkJwazJTemxlRTRESmtNX01UblFCaG1kMVRyNklrWl83eWtmMmt5UzNXTTUtcUN1Q2kwOW1jMjY4VkZXbWs3V1RQTFpLSzZxbEdTeVVCYkt2dE0xUWtBbHdLSDRNYTVyOHVXUzZzM3R3aVhCT0taazlhVW9WTTBQSVRFZmNYNGJYRmNRZzFXRGRmUQ?oc=5" target="_blank" rel="noopener">Vandelux Celebrates New Album Era at Palm Tree Music Fest in Napa: &#x27;Chase What Your Soul Wants&#x27; - Rolling Stone</a>
+          <p class="item-meta">Rolling Stone · 14.10. klo 07:00</p>
+        </div>
+          </div>
+        </details>
+        <details class="section" open>
+          <summary class="section-head" style="--dot: #8C6B3F">
             <span class="dot"></span>
             <h2>Diageo Suomessa</h2>
             <span class="count">4</span>
@@ -179,7 +232,7 @@
           </div>
         </details>
         <details class="section" open>
-          <summary class="section-head" style="--dot: #6B7355">
+          <summary class="section-head" style="--dot: #C9A227">
             <span class="dot"></span>
             <h2>Diageo maailmalla</h2>
             <span class="count">4</span>
@@ -191,47 +244,39 @@
           <p class="item-meta">Financial Times · 17.9. klo 15:07</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNV0pLMTZiZGQ3NkJQUUIwbnd3bGM3ZEdQUDNoSlo4UU81UlFIVFpoXzluNlM1d1MzTnY2UXVSM0JBeTZLZG5VN0VQVndncktyQ1FiTnJDNmgySVJmRHpzbVV2VktRSGFHMlRkQ3NaQXIzazFxUFpLblJMZThRRkxid0JIZlFDejJsRldV?oc=5" target="_blank" rel="noopener">Dates set for three-week Diageo strikes - thespiritsbusiness.com</a>
-          <p class="item-meta">thespiritsbusiness.com · 18.9. klo 10:02</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNV0pLMTZiZGQ3NkJQUUIwbnd3bGM3ZEdQUDNoSlo4UU81UlFIVFpoXzluNlM1d1MzTnY2UXVSM0JBeTZLZG5VN0VQVndncktyQ1FiTnJDNmgySVJmRHpzbVV2VktRSGFHMlRkQ3NaQXIzazFxUFpLblJMZThRRkxid0JIZlFDejJsRldV?oc=5" target="_blank" rel="noopener">Dates set for three-week Diageo strikes - The Spirits Business</a>
+          <p class="item-meta">The Spirits Business · 18.9. klo 10:02</p>
         </div>
         <div class="item">
           <a class="item-title" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5ZVWpEYWZ6NEF0NkFnYnNENlZBMnlHZnBiWFFhWWlxbWRTSko1d0hwU3dYR3JDRWlNTGRoZjJMcGpjWFQ1SUpjWG5QSWpxQVViWGp3OVJxS0xlTkg3MDR5THRwRTRWOEdYeWZkQkRGWlI?oc=5" target="_blank" rel="noopener">Diageo strike dates announced - Just Drinks</a>
           <p class="item-meta">Just Drinks · 18.9. klo 01:47</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOR2J3SDNjSVp4bTl0ci1IS1NXamVGYzJlQnV1eDc3dFo2WktPdi15eTZzT2FIUUR4UFNzT2Z5c1NsaklYd3YzdFRYcGVvYmFjOW1WNUI1dkJaSlpIaWYyNkJfMXFSRFI5akU1U0hlWDFRTW5Ob0p3M0M3TFkwTHpPMHE4OXRhWUhQSEN6NWVHUHdJT3U2UlhjcTdDUWs4TGNmV2k4d3ZWNC1RQWRmcW1PeDRXdw?oc=5" target="_blank" rel="noopener">Diageo ‘disappointed’ as scotch whisky production reduction risks strike action - drinks-intel.com</a>
-          <p class="item-meta">drinks-intel.com · 17.9. klo 16:26</p>
-        </div>
-          </div>
-        </details>
-        <details class="section" open>
-          <summary class="section-head" style="--dot: #8A6B8A">
-            <span class="dot"></span>
-            <h2>Tarkkailtavat brändit</h2>
-            <span class="count">4</span>
-          </summary>
-          <div class="section-body">
-            
-        <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxQLXVLTnJNenU3YzZzUWJDN3ZiTmc1SFJpSDlESDlwR00ycllqdUVNMU5tRUp2c0pNUDdZcFpEaUdUVW9MaFNMcVlLcjZsYjZqLU9jdkZUdW1NUDlVMnNreFVYcHZac1A1RkJKMVJqSFhBV2JnQ2NPS0k2dHRmZEFWSG9UaUxROG9DSnhN?oc=5" target="_blank" rel="noopener">Diageo proposes 150 job cuts in Ireland - thespiritsbusiness.com</a>
-          <p class="item-meta">thespiritsbusiness.com · 24.6. klo 07:00</p>
-        </div>
-        <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMifkFVX3lxTFB6OUhNOFFfMHhKYjZPNUJ3YnVtcnZvYXA5TndHOEJsY29aWGUxUHZKdnRrY1A0T1IyTGpNYkY4dTlTRXJkXzhYUjhJTnJrbUJUNkZvN05RTmlBMW5XWjFSWG5vVDdrazNReHlUdlNwM0cxQ0pTUzVrb2k1RDBZUQ?oc=5" target="_blank" rel="noopener">House of Guinness: Where to follow in the family’s footsteps in Ireland - Wanderlust Travel Magazine</a>
-          <p class="item-meta">Wanderlust Travel Magazine · 8.10. klo 07:00</p>
-        </div>
-        <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMikwFBVV95cUxPaEJjRmMycWlKUnF3VXhyYW43N1hhUS12X1VNcmRubER2T2VxZmQ4R2RYYlpNWVZPTFpmaW1Vb2tpX2NQeWdVVnAyYUVlNFBxWUNKYlNkVjFUMXlCTWpyTDlocWNXNDFuOHFYTGc0a1hhMjlFOUJvQXVpby1yZTdYRVJiVk91QjduQUhBOGpKTnJ5TUU?oc=5" target="_blank" rel="noopener">Why Kampala whisky drinkers are looking beyond the price tag - Pulse Uganda</a>
-          <p class="item-meta">Pulse Uganda · 1.9. klo 22:39</p>
-        </div>
-        <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMib0FVX3lxTE9BcjRHUlBzOHJGUWJ3REprdDY1bzNSZFdLOFlHSVNhQlhNbWtSRHNOcmU5cGdyeDZwaXBPMHNScjZ6R2pZR0hWUWhNY0JZVVY1YVdQaGRrTTNjbUFPajNrUE9GWHFaUUlsVUxkbUNqYw?oc=5" target="_blank" rel="noopener">Sophia Roe Orders This Under-$15 Holiday Hosting Essential On Auto-Ship - Bon Appétit: Recipes, Cooking, Entertaining, Restaurants | Bon Appétit</a>
-          <p class="item-meta">Bon Appétit: Recipes, Cooking, Entertaining, Restaurants | Bon Appétit · 20.11. klo 08:00</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOR2J3SDNjSVp4bTl0ci1IS1NXamVGYzJlQnV1eDc3dFo2WktPdi15eTZzT2FIUUR4UFNzT2Z5c1NsaklYd3YzdFRYcGVvYmFjOW1WNUI1dkJaSlpIaWYyNkJfMXFSRFI5akU1U0hlWDFRTW5Ob0p3M0M3TFkwTHpPMHE4OXRhWUhQSEN6NWVHUHdJT3U2UlhjcTdDUWs4TGNmV2k4d3ZWNC1RQWRmcW1PeDRXdw?oc=5" target="_blank" rel="noopener">Diageo ‘disappointed’ as scotch whisky production reduction risks strike action - Global Drinks Intel</a>
+          <p class="item-meta">Global Drinks Intel · 17.9. klo 16:26</p>
         </div>
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #4E7A94">
+          <summary class="section-head" style="--dot: #8C6B3F">
+            <span class="dot"></span>
+            <h2>Muut tarkkailtavat brändit</h2>
+            <span class="count">2</span>
+          </summary>
+          <div class="section-body">
+            
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMinAFBVV95cUxOd1FDMUpHRlBubVJ5Unl2blItVWJrMTVtX2F6aklsd3pueTBEWVUwVEhPYmtKMmlrSVRmQlpnaXZTV3pxdkFjT1FvNXg4ZXVNLW9PWEQyX0FaVllwby1ucUpjT0I4OGRDV2pMMzRNNl95aFQ2cU9rWHFyLWFkWUctZkt1NThkUWtVNTVxVWFCZkFSQlM3OWNqN1BTMVQ?oc=5" target="_blank" rel="noopener">Article - Lovin Dublin</a>
+          <p class="item-meta">Lovin Dublin · 7.12. klo 13:13</p>
+        </div>
+        <div class="item">
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMipAFBVV95cUxQVm45ZVd4VDZ5WVdkZ0RLRW1kMTJaUEszcHlZUEtmWEdlS0Rhb2MzcXMxWk9sMml6cnlSOERZOHBkU2FoUi0wMXl4UWlXOWF0d0cwZUU5UUFJMF84R3RCZUxTOEx4YWdXS2pvbnQzZkpzVVhsOGl6SVBFc1RSazZ5Z25yOFZnVkRhSHJPbmJkRzhNdVBZUTBGQXBOZkh4ZVd1ZmNuXw?oc=5" target="_blank" rel="noopener">12 Must-Try Margaritas in Dublin for World Margarita Day - Lovin Dublin</a>
+          <p class="item-meta">Lovin Dublin · 21.2. klo 08:00</p>
+        </div>
+          </div>
+        </details>
+        <details class="section" >
+          <summary class="section-head" style="--dot: #C9A227">
             <span class="dot"></span>
             <h2>Kilpailijat</h2>
             <span class="count">4</span>
@@ -257,7 +302,7 @@
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #C08A4E">
+          <summary class="section-head" style="--dot: #8C6B3F">
             <span class="dot"></span>
             <h2>Uudet ravintolat ja baarit Suomessa</h2>
             <span class="count">4</span>
@@ -283,7 +328,7 @@
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #6B7355">
+          <summary class="section-head" style="--dot: #C9A227">
             <span class="dot"></span>
             <h2>Suomen ravintola-alan uutiset</h2>
             <span class="count">4</span>
@@ -309,7 +354,7 @@
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #8A6B8A">
+          <summary class="section-head" style="--dot: #8C6B3F">
             <span class="dot"></span>
             <h2>Cocktail-trendit maailmalla</h2>
             <span class="count">4</span>
@@ -321,12 +366,12 @@
           <p class="item-meta">Food &amp; Wine · 9.9. klo 07:00</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxOM2taRk5FOGNkRzFGc3ZnSkdGUXdheXlEYVJVSFBsZHY2djZYRmlyeEdtdE1aRkh1dnJzWlJmRGF4S2o1d1JzaVhIMGlybWZsUF9xaWcwbGVUdFFON0RzVmdDTGpuc1ZZUG54VEdTOEpvbmlHLXVub1VIeHN3S05xTmQzTERSdXBtZ1g0c3MxcnVqek5BQkkzV0Z3OVJBMVRZa1dsajZDMkZQbzhjaUxIcmR1T1ZrdEt0?oc=5" target="_blank" rel="noopener">6 Spring Cocktail Trends Set To Dominate 2026, According To Experts - Forbes</a>
-          <p class="item-meta">Forbes · 6.5. klo 07:00</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxOM2taRk5FOGNkRzFGc3ZnSkdGUXdheXlEYVJVSFBsZHY2djZYRmlyeEdtdE1aRkh1dnJzWlJmRGF4S2o1d1JzaVhIMGlybWZsUF9xaWcwbGVUdFFON0RzVmdDTGpuc1ZZUG54VEdTOEpvbmlHLXVub1VIeHN3S05xTmQzTERSdXBtZ1g0c3MxcnVqek5BQkkzV0Z3OVJBMVRZa1dsajZDMkZQbzhjaUxIcmR1T1ZrdEt0?oc=5" target="_blank" rel="noopener">6 Spring Cocktail Trends Set To Dominate 2026, According To Experts - forbes.com</a>
+          <p class="item-meta">forbes.com · 6.5. klo 07:00</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMinwFBVV95cUxQeDloaGs2cHZ1dVdHeG5odm1HZmdtZ2RJUlJmZXRaNk03dTR6TXk4QVlRREx1ak1tdDJsWEFDbFQwN2lJdEdHS2RrOXBCNkVxSGh6Y0s0X2tuNlZfLW0xVzd2Nl9KY3BTNFdYdldwOFg4WHBrYWVRb3pzdU9IV3g4cUVyODI2dW16VEJ3V2JZcW80TkFrRVYweE9EMEJIT0U?oc=5" target="_blank" rel="noopener">How India is reversing the alcohol-free cocktail trend - thespiritsbusiness.com</a>
-          <p class="item-meta">thespiritsbusiness.com · 29.7. klo 07:00</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMinwFBVV95cUxQeDloaGs2cHZ1dVdHeG5odm1HZmdtZ2RJUlJmZXRaNk03dTR6TXk4QVlRREx1ak1tdDJsWEFDbFQwN2lJdEdHS2RrOXBCNkVxSGh6Y0s0X2tuNlZfLW0xVzd2Nl9KY3BTNFdYdldwOFg4WHBrYWVRb3pzdU9IV3g4cUVyODI2dW16VEJ3V2JZcW80TkFrRVYweE9EMEJIT0U?oc=5" target="_blank" rel="noopener">How India is reversing the alcohol-free cocktail trend - The Spirits Business</a>
+          <p class="item-meta">The Spirits Business · 29.7. klo 07:00</p>
         </div>
         <div class="item">
           <a class="item-title" href="https://news.google.com/rss/articles/CBMid0FVX3lxTE9NQjU4WEotRXJfTzVjeXlRLVUwRmk2X3NZR3FoRnJ5UU9kRm1zYVhobUdxaHVwSGtqZHZKN1AyeWk2STBRTHlMbUd0Uk5lZmVNbTBxNjJrcjlHX0k3OGdJT3JmNFBXelhyR1BMdFJyV0lxRkRKTElV?oc=5" target="_blank" rel="noopener">The Drink of Summer Is Looking Bright, Bubbly and a Little Predictable - observer.com</a>
@@ -335,7 +380,7 @@
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #4E7A94">
+          <summary class="section-head" style="--dot: #C9A227">
             <span class="dot"></span>
             <h2>Väkevien alan uutiset ja ennusteet</h2>
             <span class="count">4</span>
@@ -361,7 +406,7 @@
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #C08A4E">
+          <summary class="section-head" style="--dot: #8C6B3F">
             <span class="dot"></span>
             <h2>Suomen alan tapahtumat</h2>
             <span class="count">4</span>
@@ -387,7 +432,7 @@
           </div>
         </details>
         <details class="section" >
-          <summary class="section-head" style="--dot: #6B7355">
+          <summary class="section-head" style="--dot: #C9A227">
             <span class="dot"></span>
             <h2>Alan tapahtumat maailmalla</h2>
             <span class="count">4</span>
@@ -415,14 +460,38 @@
 
   
     <section class="drink-wrap">
-      <div class="section-head static"><span class="dot" style="--dot: var(--copper)"></span><h2>Drinkki-idea</h2></div>
-      <div class="drink">
-        <div class="drink-name">Savustettu Mule</div>
-        <p class="drink-note">Moscow Mulen syksyinen versio - helppo lisä listalle sellaisenaan.</p>
-        <div class="drink-specs">
-          <div><span>Pohja</span>Vodka 4cl</div>
-          <div><span>Lisäys</span>Inkiväärikaljaa, limeä</div>
-          <div><span>Viimeistely</span>Savustettu rosmariini</div>
+      <div class="section-head static"><span class="dot" style="--dot: var(--copper)"></span><h2>Syksykauden drinkki-ideat</h2></div>
+      <div class="drink-grid">
+        
+        <div class="drink">
+          <span class="drink-tag">Ylellinen</span>
+          <div class="drink-name">Viikuna-Saksanpähkinä Old Fashioned</div>
+          <p class="drink-note">Syvä ja pähkinäinen, sopii hyvin illallisen jälkeiseksi.</p>
+          <div class="drink-specs">
+            <div><span>Pohja</span>Viski 5cl</div>
+            <div><span>Lisäys</span>Viikunasiirappi, angostura</div>
+            <div><span>Viimeistely</span>Saksanpähkinän kuori</div>
+          </div>
+        </div>
+        <div class="drink">
+          <span class="drink-tag">Mausteinen</span>
+          <div class="drink-name">Chai-Espresso Martini</div>
+          <p class="drink-note">Espresso Martinin mausteinen syksyversio - erottuu listalla.</p>
+          <div class="drink-specs">
+            <div><span>Pohja</span>Vodka 4cl, kahvilikööri 2cl</div>
+            <div><span>Lisäys</span>Tuore espresso, chai-siirappi</div>
+            <div><span>Viimeistely</span>Rouhittu kardemumma</div>
+          </div>
+        </div>
+        <div class="drink">
+          <span class="drink-tag">Syksyn suosikki</span>
+          <div class="drink-name">Savustettu Mule</div>
+          <p class="drink-note">Moscow Mulen syksyinen versio - helppo lisä listalle sellaisenaan.</p>
+          <div class="drink-specs">
+            <div><span>Pohja</span>Vodka 4cl</div>
+            <div><span>Lisäys</span>Inkiväärikaljaa, limeä</div>
+            <div><span>Viimeistely</span>Savustettu rosmariini</div>
+          </div>
         </div>
       </div>
     </section>
