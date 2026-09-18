@@ -16,8 +16,8 @@ DATA_FILE = BASE / "data" / "history.json"
 
 FINNISH_MONTHS_SHORT = None  # placeholder, we use numeric dd.mm. format instead
 
-# Väripiste per kategoria - kevyt visuaalinen erottelu ilman kirjavuutta
-ACCENTS = ["#C08A4E", "#6B7355", "#8A6B8A", "#4E7A94"]
+# Väripiste per kategoria - kulta/pronssi-sävyt, yhtenäinen ja tyylikäs kirjavuuden sijaan
+ACCENTS = ["#C9A227", "#8C6B3F"]
 
 
 def format_date(raw):
@@ -39,6 +39,15 @@ BRANDS = [
     "Pimm's", "Don Papa", "Santiago de Cuba",
 ]
 
+# Isoimmat brändit saavat oman, kohdennetun haun (uutuudet, kasvot, julkaisut)
+# geneerisen Diageo-massahaun sijaan. Muokkaa listaa vapaasti.
+FLAGSHIP_BRANDS = [
+    "Johnnie Walker", "Guinness", "Baileys", "Tanqueray",
+    "Don Julio", "Ketel One", "Captain Morgan", "Smirnoff",
+]
+FLAGSHIP_LABEL = "Brändiuutiset: uutuudet, kasvot & julkaisut"
+OTHER_BRANDS = [b for b in BRANDS if b not in FLAGSHIP_BRANDS]
+
 # Suorat RSS-feedit alan omista kauppalehdistä - laadukkaampia kuin Google Newsin
 # yleishaku. Nämä yhdistetään "Väkevien alan uutiset"-kategoriaan Google Newsin lisäksi.
 TRADE_FEEDS = {
@@ -52,8 +61,8 @@ TRADE_FEEDS = {
 QUERIES = {
     "Diageo Suomessa": {"q": '"Diageo" Suomi', "hl": "fi", "gl": "FI"},
     "Diageo maailmalla": {"q": '"Diageo"', "hl": "en", "gl": "US"},
-    "Tarkkailtavat brändit": {
-        "q": " OR ".join(f'"{b}"' for b in BRANDS),
+    "Muut tarkkailtavat brändit": {
+        "q": " OR ".join(f'"{b}"' for b in OTHER_BRANDS),
         "hl": "en",
         "gl": "US",
     },
@@ -91,27 +100,58 @@ QUERIES = {
 }
 
 DRINKS = [
-    {"season": "talvi", "name": "Savustettu Old Fashioned",
-     "note": "Lämmittävä, sopii pimeään kauteen ja joulun ympärille.",
+    # Talvi
+    {"season": "talvi", "tag": "Lämmittävä klassikko", "name": "Savustettu Old Fashioned",
+     "note": "Sopii pimeään kauteen ja joulun ympärille.",
      "base": "Viski 5cl", "mixer": "Siirappi, angostura", "finish": "Savustettu appelsiininkuori"},
-    {"season": "talvi", "name": "Espresso Martini -variaatio",
+    {"season": "talvi", "tag": "Ilta-annos", "name": "Espresso Martini -variaatio",
      "note": "Ikivihreä, toimii erityisesti pimeän kauden ilta-annoksena.",
      "base": "Vodka 4cl, kahvilikööri 2cl", "mixer": "Tuore espresso", "finish": "Kolme kahvipapua"},
-    {"season": "kevät", "name": "Yrttinen Gin Fizz",
+    {"season": "talvi", "tag": "Comfort drink", "name": "Konjakki-Toddy",
+     "note": "Kuuma, rauhoittava - toimii myös alkoholittomana pohjalla.",
+     "base": "Viski 4cl", "mixer": "Kuuma vesi, hunaja, sitruuna", "finish": "Kanelitanko"},
+    {"season": "talvi", "tag": "Juhlava", "name": "Joulupippuri Sour",
+     "note": "Terävä ja mausteinen, hyvä lisä joulusesongin listalle.",
+     "base": "Gin 4cl", "mixer": "Sitruuna, siirappi, valkuainen", "finish": "Rouhittu mustapippuri"},
+    # Kevät
+    {"season": "kevät", "tag": "Raikas", "name": "Yrttinen Gin Fizz",
      "note": "Kevyt ja raikas, hyödyntää kevään yrttejä listalla.",
      "base": "Gin 4cl", "mixer": "Sooda, sitruuna", "finish": "Tuore tilli tai minttu"},
-    {"season": "kesä", "name": "Matala-alkoholinen spritz",
+    {"season": "kevät", "tag": "Kausituote", "name": "Rabarperi Collins",
+     "note": "Suomalainen kevätrabarperi tuo paikallisen twistin klassikkoon.",
+     "base": "Vodka 4cl", "mixer": "Rabarperisiirappi, sooda", "finish": "Rabarperitikku"},
+    {"season": "kevät", "tag": "Kevyt", "name": "Elderflower Highball",
+     "note": "Kukkainen ja matalakalorinen, sopii aperitiiviksi.",
+     "base": "Gin 4cl", "mixer": "Sambuca-sooda, samppanjahiiva-liköri", "finish": "Sitruunatwist"},
+    {"season": "kevät", "tag": "Yrttinen", "name": "Basil Smash -variaatio",
+     "note": "Tuoreen yrtin ja sitruksen tasapaino, näyttää hyvältä lasissa.",
+     "base": "Gin 4cl", "mixer": "Sitruuna, siirappi", "finish": "Tuore basilika"},
+    # Kesä
+    {"season": "kesä", "tag": "Low & no", "name": "Matala-alkoholinen spritz",
      "note": "Vastaa low/no-trendiin kesäterassilla ilman että makuprofiili kärsii.",
      "base": "Aperitiivi 3cl", "mixer": "Kuohuva, soodaa", "finish": "Appelsiiniviipale"},
-    {"season": "kesä", "name": "Highball-klassikko",
+    {"season": "kesä", "tag": "Terassiklassikko", "name": "Highball-klassikko",
      "note": "Japanilaistyylinen highball - kevyt ja helposti skaalattava terassikäyttöön.",
      "base": "Viski 4cl", "mixer": "Runsaasti soodaa", "finish": "Sitruunatwist"},
-    {"season": "syksy", "name": "Savustettu Mule",
+    {"season": "kesä", "tag": "Kesäjuhla", "name": "Vesimeloni-Margarita",
+     "note": "Näyttävä ja kesäinen, toimii hyvin myös isommille pöytäseurueille.",
+     "base": "Tequila 4cl", "mixer": "Tuore vesimelonimehu, limetti", "finish": "Suolareunus"},
+    {"season": "kesä", "tag": "Raikas", "name": "Kurkku-Gin Collins",
+     "note": "Kevyt ja raikas, suosittu erityisesti lounasaikaan.",
+     "base": "Gin 4cl", "mixer": "Kurkkumehu, sooda, limetti", "finish": "Kurkkuviipale"},
+    # Syksy
+    {"season": "syksy", "tag": "Syksyn suosikki", "name": "Savustettu Mule",
      "note": "Moscow Mulen syksyinen versio - helppo lisä listalle sellaisenaan.",
      "base": "Vodka 4cl", "mixer": "Inkiväärikaljaa, limeä", "finish": "Savustettu rosmariini"},
-    {"season": "syksy", "name": "Omena-Old Fashioned",
+    {"season": "syksy", "tag": "Kausituote", "name": "Omena-Old Fashioned",
      "note": "Syksyinen twist klassikkoon, sopii ruokalistan kausivaihtoon.",
      "base": "Viski 5cl", "mixer": "Omenasiirappi, angostura", "finish": "Kaneli"},
+    {"season": "syksy", "tag": "Ylellinen", "name": "Viikuna-Saksanpähkinä Old Fashioned",
+     "note": "Syvä ja pähkinäinen, sopii hyvin illallisen jälkeiseksi.",
+     "base": "Viski 5cl", "mixer": "Viikunasiirappi, angostura", "finish": "Saksanpähkinän kuori"},
+    {"season": "syksy", "tag": "Mausteinen", "name": "Chai-Espresso Martini",
+     "note": "Espresso Martinin mausteinen syksyversio - erottuu listalla.",
+     "base": "Vodka 4cl, kahvilikööri 2cl", "mixer": "Tuore espresso, chai-siirappi", "finish": "Rouhittu kardemumma"},
 ]
 
 SEASON_BY_MONTH = {
@@ -161,6 +201,20 @@ def fetch_direct_rss(source_name, url, limit=4):
     return items
 
 
+def fetch_flagship_news(brands, seen_titles, per_brand=2):
+    """Hakee jokaiselle isolle brändille kohdennetusti uutuuksia, kasvoja ja julkaisuja
+    - ei geneeristä 'Diageo'-mainintaa vaan nimenomaan tuote-/markkinointiuutisia."""
+    items = []
+    for brand in brands:
+        q = (
+            f'"{brand}" ambassador OR "{brand}" "limited edition" OR '
+            f'"{brand}" launch OR "{brand}" campaign OR "{brand}" "new release"'
+        )
+        raw = fetch_category(q, hl="en", gl="US", limit=per_brand)
+        items += dedup_items(raw, seen_titles)
+    return items
+
+
 def load_history():
     if DATA_FILE.exists():
         try:
@@ -177,12 +231,13 @@ def save_history(history):
     DATA_FILE.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def pick_drink():
+def pick_drinks(n=3):
     now = datetime.now(timezone.utc)
     season = SEASON_BY_MONTH[now.month]
-    season_drinks = [d for d in DRINKS if d["season"] == season]
+    pool = [d for d in DRINKS if d["season"] == season]
     week_num = now.isocalendar()[1]
-    return season_drinks[week_num % len(season_drinks)]
+    start = week_num % len(pool)
+    return [pool[(start + i) % len(pool)] for i in range(n)], season
 
 
 def compute_trending(history, days=7, top_n=3):
@@ -237,7 +292,7 @@ def render_highlights(all_results):
         if not items:
             continue
         top = items[0]
-        color = ACCENTS[i % len(ACCENTS)]
+        color = "var(--wine)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
         cards += f"""
         <a class="hl-card" href="{escape(top['link'])}" target="_blank" rel="noopener" style="--dot: {color}">
           <span class="hl-label">{escape(label)}</span>
@@ -256,15 +311,15 @@ def render_trending(trending):
     return f'<div class="trending"><span class="trending-label">Nousussa tällä viikolla</span>{chips}</div>'
 
 
-def build_html(all_results, drink, updated_at, trending):
+def build_html(all_results, drinks, season, updated_at, trending):
     highlights_html = render_highlights(all_results)
     trending_html = render_trending(trending)
 
     sections_html = ""
     for i, (label, items) in enumerate(all_results.items()):
-        color = ACCENTS[i % len(ACCENTS)]
-        # Kolme ensimmäistä kategoriaa auki oletuksena, loput kiinni (klikillä auki)
-        open_attr = "open" if i < 3 else ""
+        color = "var(--wine)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
+        # Brändiuutiset ja kolme ensimmäistä auki oletuksena, loput kiinni (klikillä auki)
+        open_attr = "open" if (label == FLAGSHIP_LABEL or i < 3) else ""
         sections_html += f"""
         <details class="section" {open_attr}>
           <summary class="section-head" style="--dot: {color}">
@@ -277,17 +332,25 @@ def build_html(all_results, drink, updated_at, trending):
           </div>
         </details>"""
 
+    drink_cards = ""
+    for d in drinks:
+        drink_cards += f"""
+        <div class="drink">
+          <span class="drink-tag">{escape(d['tag'])}</span>
+          <div class="drink-name">{escape(d['name'])}</div>
+          <p class="drink-note">{escape(d['note'])}</p>
+          <div class="drink-specs">
+            <div><span>Pohja</span>{escape(d['base'])}</div>
+            <div><span>Lisäys</span>{escape(d['mixer'])}</div>
+            <div><span>Viimeistely</span>{escape(d['finish'])}</div>
+          </div>
+        </div>"""
+
     drink_html = f"""
     <section class="drink-wrap">
-      <div class="section-head static"><span class="dot" style="--dot: var(--copper)"></span><h2>Drinkki-idea</h2></div>
-      <div class="drink">
-        <div class="drink-name">{escape(drink['name'])}</div>
-        <p class="drink-note">{escape(drink['note'])}</p>
-        <div class="drink-specs">
-          <div><span>Pohja</span>{escape(drink['base'])}</div>
-          <div><span>Lisäys</span>{escape(drink['mixer'])}</div>
-          <div><span>Viimeistely</span>{escape(drink['finish'])}</div>
-        </div>
+      <div class="section-head static"><span class="dot" style="--dot: var(--copper)"></span><h2>{escape(season.capitalize())}kauden drinkki-ideat</h2></div>
+      <div class="drink-grid">
+        {drink_cards}
       </div>
     </section>"""
 
@@ -302,8 +365,8 @@ def build_html(all_results, drink, updated_at, trending):
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {{
-    --bg: #1B1713; --bg-raised: #221D18; --ink: #EDE3D3; --ink-dim: #A99A86;
-    --copper: #C08A4E; --line: #3A322A;
+    --bg: #100D0A; --bg-raised: #1A1510; --ink: #F2E9DA; --ink-dim: #9C8D78;
+    --copper: #C9A227; --wine: #8B3A3A; --line: #2B241D;
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
@@ -313,7 +376,7 @@ def build_html(all_results, drink, updated_at, trending):
   }}
   a {{ color: inherit; }}
   .wrap {{ max-width: 800px; margin: 0 auto; padding: 48px 24px 80px; }}
-  header {{ margin-bottom: 36px; }}
+  header {{ margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }}
   .kicker {{ color: var(--copper); font-size: 13px; margin-bottom: 8px; }}
   h1 {{ font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px, 5vw, 40px); line-height: 1.1; max-width: 16ch; }}
   .subhead {{ color: var(--ink-dim); font-size: 15px; margin-top: 10px; max-width: 46ch; }}
@@ -371,27 +434,26 @@ def build_html(all_results, drink, updated_at, trending):
 
   /* Drinkki */
   .drink-wrap {{ margin-top: 28px; }}
-  .drink {{ background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; padding: 22px; }}
-  .drink-name {{ font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; margin-bottom: 6px; }}
-  .drink-note {{ color: var(--ink-dim); font-size: 14px; margin-bottom: 14px; max-width: 56ch; }}
-  .drink-specs {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; font-size: 13.5px; }}
-  .drink-specs div span {{ display: block; color: var(--ink-dim); font-size: 11.5px; margin-bottom: 2px; }}
+  .drink-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }}
+  .drink {{ background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }}
+  .drink-tag {{
+    display: inline-block; font-size: 11px; color: var(--copper); border: 1px solid var(--copper);
+    border-radius: 999px; padding: 2px 9px; margin-bottom: 10px;
+  }}
+  .drink-name {{ font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; margin-bottom: 6px; }}
+  .drink-note {{ color: var(--ink-dim); font-size: 13.5px; margin-bottom: 14px; }}
+  .drink-specs {{ display: flex; flex-direction: column; gap: 8px; font-size: 13px; }}
+  .drink-specs div span {{ display: block; color: var(--ink-dim); font-size: 11px; margin-bottom: 2px; }}
 
   footer {{ color: var(--ink-dim); font-size: 12.5px; margin-top: 32px; }}
-
-  @media (prefers-color-scheme: light) {{
-    :root:not([data-theme="dark"]) {{
-      --bg: #FBF8F2; --bg-raised: #F2ECE0; --ink: #24201A; --ink-dim: #6B6154; --copper: #9C6A34; --line: #E2D9C8;
-    }}
-  }}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="kicker">Päivitetty {escape(updated_at)}</div>
-    <h1>Diageo & ravintola-ala -briiffi</h1>
-    <p class="subhead">Nopea yleiskuva alta, tarkemmat listat klikkaamalla auki.</p>
+    <h1>Diageo & Alcohol Industry News</h1>
+    <p class="subhead">Brändiuutiset, kilpailijat ja ravintolakentän liikkeet samassa näkymässä.</p>
   </header>
 
   {trending_html}
@@ -435,11 +497,28 @@ def build_html(all_results, drink, updated_at, trending):
 </html>"""
 
 
+def record_history(history, items, label, now_ts):
+    for it in items:
+        already_seen = any(
+            h["link"] == it["link"] and h.get("category") == label for h in history
+        )
+        if not already_seen:
+            entry = dict(it)
+            entry["category"] = label
+            entry["fetched_at"] = now_ts
+            history.append(entry)
+
+
 def main():
     all_results = {}
     history = load_history()
     now_ts = datetime.now(timezone.utc).timestamp()
     seen_titles = set()
+
+    # Brändiuutiset ensin - kohdennetut haut isoimmille brändeille
+    flagship_items = fetch_flagship_news(FLAGSHIP_BRANDS, seen_titles, per_brand=2)[:10]
+    all_results[FLAGSHIP_LABEL] = flagship_items
+    record_history(history, flagship_items, FLAGSHIP_LABEL, now_ts)
 
     for label, spec in QUERIES.items():
         trade_items = []
@@ -452,22 +531,14 @@ def main():
         )
         items = (trade_items + gnews_items)[:6]
         all_results[label] = items
-        for it in items:
-            already_seen = any(
-                h["link"] == it["link"] and h.get("category") == label for h in history
-            )
-            if not already_seen:
-                entry = dict(it)
-                entry["category"] = label
-                entry["fetched_at"] = now_ts
-                history.append(entry)
+        record_history(history, items, label, now_ts)
 
     save_history(history)
 
     trending = compute_trending(history)
-    drink = pick_drink()
+    drinks, season = pick_drinks()
     updated_at = datetime.now(timezone.utc).strftime("%d.%m.%Y %H:%M UTC")
-    html = build_html(all_results, drink, updated_at, trending)
+    html = build_html(all_results, drinks, season, updated_at, trending)
 
     DOCS.mkdir(parents=True, exist_ok=True)
     (DOCS / "index.html").write_text(html, encoding="utf-8")
