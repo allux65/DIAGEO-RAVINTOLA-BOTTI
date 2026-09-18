@@ -39,6 +39,14 @@ BRANDS = [
     "Pimm's", "Don Papa", "Santiago de Cuba",
 ]
 
+# Suorat RSS-feedit alan omista kauppalehdistä - laadukkaampia kuin Google Newsin
+# yleishaku. Nämä yhdistetään "Väkevien alan uutiset"-kategoriaan Google Newsin lisäksi.
+TRADE_FEEDS = {
+    "Väkevien alan uutiset ja ennusteet": [
+        ("The Spirits Business", "https://www.thespiritsbusiness.com/feed/"),
+    ],
+}
+
 # Muokkaa näitä hakuja vapaasti - jokainen on oma osio sivulla.
 # hl/gl ohjaavat kieltä ja aluetta: fi/FI = suomenkieliset tulokset, en/US = globaalit tulokset.
 QUERIES = {
@@ -134,6 +142,25 @@ def fetch_category(query, hl="fi", gl="FI", limit=4):
     return items
 
 
+def fetch_direct_rss(source_name, url, limit=4):
+    """Hakee suoraan yhdestä RSS-feedistä (ei Google News -wrapperia)."""
+    try:
+        feed = feedparser.parse(url)
+    except Exception:
+        return []
+    items = []
+    for entry in feed.entries[:limit]:
+        items.append(
+            {
+                "title": entry.get("title", ""),
+                "link": entry.get("link", ""),
+                "published": entry.get("published", ""),
+                "source": source_name,
+            }
+        )
+    return items
+
+
 def load_history():
     if DATA_FILE.exists():
         try:
@@ -156,6 +183,22 @@ def pick_drink():
     season_drinks = [d for d in DRINKS if d["season"] == season]
     week_num = now.isocalendar()[1]
     return season_drinks[week_num % len(season_drinks)]
+
+
+def compute_trending(history, days=7, top_n=3):
+    """Laskee mitkä seuratut brändit ovat esiintyneet useimmin otsikoissa viime päivinä."""
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).timestamp()
+    recent_titles = [
+        h["title"].lower() for h in history if h.get("fetched_at", 0) >= cutoff
+    ]
+    counts = {}
+    for brand in BRANDS:
+        b = brand.lower()
+        count = sum(1 for t in recent_titles if b in t)
+        if count >= 2:
+            counts[brand] = count
+    top = sorted(counts.items(), key=lambda x: x[1], reverse=True)[:top_n]
+    return top
 
 
 def dedup_items(items, seen_titles):
@@ -203,8 +246,19 @@ def render_highlights(all_results):
     return cards
 
 
-def build_html(all_results, drink, updated_at):
+def render_trending(trending):
+    if not trending:
+        return ""
+    chips = "".join(
+        f'<span class="chip">{escape(brand)} <span class="chip-count">{count}</span></span>'
+        for brand, count in trending
+    )
+    return f'<div class="trending"><span class="trending-label">Nousussa tällä viikolla</span>{chips}</div>'
+
+
+def build_html(all_results, drink, updated_at, trending):
     highlights_html = render_highlights(all_results)
+    trending_html = render_trending(trending)
 
     sections_html = ""
     for i, (label, items) in enumerate(all_results.items()):
@@ -264,6 +318,25 @@ def build_html(all_results, drink, updated_at):
   h1 {{ font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px, 5vw, 40px); line-height: 1.1; max-width: 16ch; }}
   .subhead {{ color: var(--ink-dim); font-size: 15px; margin-top: 10px; max-width: 46ch; }}
 
+  /* Trendit */
+  .trending {{ display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }}
+  .trending-label {{ font-size: 12.5px; color: var(--ink-dim); margin-right: 4px; }}
+  .chip {{
+    display: inline-flex; align-items: center; gap: 5px; font-size: 13px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 10px;
+  }}
+  .chip-count {{ color: var(--copper); font-weight: 600; }}
+
+  /* Haku */
+  .search-wrap {{ margin-bottom: 24px; }}
+  #search {{
+    width: 100%; background: var(--bg-raised); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 6px; padding: 10px 14px; font-size: 14px; font-family: inherit;
+  }}
+  #search::placeholder {{ color: var(--ink-dim); }}
+  #search:focus {{ outline: none; border-color: var(--copper); }}
+
   /* Nostot */
   .highlights {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 40px; }}
   .hl-card {{
@@ -321,6 +394,12 @@ def build_html(all_results, drink, updated_at):
     <p class="subhead">Nopea yleiskuva alta, tarkemmat listat klikkaamalla auki.</p>
   </header>
 
+  {trending_html}
+
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Hae brändi, tapahtuma tai aihe...">
+  </div>
+
   <div class="highlights">
     {highlights_html}
   </div>
@@ -329,8 +408,29 @@ def build_html(all_results, drink, updated_at):
 
   {drink_html}
 
-  <footer>Lähde: Google News · päivittyy automaattisesti</footer>
+  <footer>Lähteet: Google News, The Spirits Business · päivittyy automaattisesti</footer>
 </div>
+<script>
+(function () {{
+  var input = document.getElementById('search');
+  if (!input) return;
+  input.addEventListener('input', function () {{
+    var q = input.value.trim().toLowerCase();
+    document.querySelectorAll('.item, .hl-card').forEach(function (el) {{
+      var match = q === '' || el.textContent.toLowerCase().indexOf(q) !== -1;
+      el.style.display = match ? '' : 'none';
+    }});
+    document.querySelectorAll('.section').forEach(function (section) {{
+      var anyVisible = Array.prototype.some.call(
+        section.querySelectorAll('.item'),
+        function (el) {{ return el.style.display !== 'none'; }}
+      );
+      if (q !== '') section.open = anyVisible;
+      section.style.display = (q === '' || anyVisible) ? '' : 'none';
+    }});
+  }});
+}})();
+</script>
 </body>
 </html>"""
 
@@ -342,8 +442,15 @@ def main():
     seen_titles = set()
 
     for label, spec in QUERIES.items():
-        raw_items = fetch_category(spec["q"], hl=spec["hl"], gl=spec["gl"])
-        items = dedup_items(raw_items, seen_titles)
+        trade_items = []
+        for source_name, feed_url in TRADE_FEEDS.get(label, []):
+            trade_items += dedup_items(
+                fetch_direct_rss(source_name, feed_url), seen_titles
+            )
+        gnews_items = dedup_items(
+            fetch_category(spec["q"], hl=spec["hl"], gl=spec["gl"]), seen_titles
+        )
+        items = (trade_items + gnews_items)[:6]
         all_results[label] = items
         for it in items:
             already_seen = any(
@@ -357,9 +464,10 @@ def main():
 
     save_history(history)
 
+    trending = compute_trending(history)
     drink = pick_drink()
     updated_at = datetime.now(timezone.utc).strftime("%d.%m.%Y %H:%M UTC")
-    html = build_html(all_results, drink, updated_at)
+    html = build_html(all_results, drink, updated_at, trending)
 
     DOCS.mkdir(parents=True, exist_ok=True)
     (DOCS / "index.html").write_text(html, encoding="utf-8")
