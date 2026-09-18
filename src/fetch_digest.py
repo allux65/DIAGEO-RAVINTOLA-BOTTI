@@ -70,7 +70,12 @@ QUERIES = {
         "hl": "en",
         "gl": "US",
     },
-    "Alan tapahtumat": {
+    "Suomen alan tapahtumat": {
+        "q": '"Helsinki Drink Festival" OR "HDF Week" OR cocktailtapahtuma OR drinkkitapahtuma OR viskitapahtuma OR baarifestivaali',
+        "hl": "fi",
+        "gl": "FI",
+    },
+    "Alan tapahtumat maailmalla": {
         "q": "cocktail festival OR bar show OR drinks industry awards",
         "hl": "en",
         "gl": "US",
