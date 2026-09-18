@@ -25,6 +25,25 @@
   h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px, 5vw, 40px); line-height: 1.1; max-width: 16ch; }
   .subhead { color: var(--ink-dim); font-size: 15px; margin-top: 10px; max-width: 46ch; }
 
+  /* Trendit */
+  .trending { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .trending-label { font-size: 12.5px; color: var(--ink-dim); margin-right: 4px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 13px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 10px;
+  }
+  .chip-count { color: var(--copper); font-weight: 600; }
+
+  /* Haku */
+  .search-wrap { margin-bottom: 24px; }
+  #search {
+    width: 100%; background: var(--bg-raised); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 6px; padding: 10px 14px; font-size: 14px; font-family: inherit;
+  }
+  #search::placeholder { color: var(--ink-dim); }
+  #search:focus { outline: none; border-color: var(--copper); }
+
   /* Nostot */
   .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 40px; }
   .hl-card {
@@ -77,10 +96,16 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="kicker">Päivitetty 18.09.2026 13:50 UTC</div>
+    <div class="kicker">Päivitetty 18.09.2026 13:57 UTC</div>
     <h1>Diageo & ravintola-ala -briiffi</h1>
     <p class="subhead">Nopea yleiskuva alta, tarkemmat listat klikkaamalla auki.</p>
   </header>
+
+  <div class="trending"><span class="trending-label">Nousussa tällä viikolla</span><span class="chip">Guinness <span class="chip-count">4</span></span></div>
+
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Hae brändi, tapahtuma tai aihe...">
+  </div>
 
   <div class="highlights">
     
@@ -94,7 +119,7 @@
         </a>
         <a class="hl-card" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxQLXVLTnJNenU3YzZzUWJDN3ZiTmc1SFJpSDlESDlwR00ycllqdUVNMU5tRUp2c0pNUDdZcFpEaUdUVW9MaFNMcVlLcjZsYjZqLU9jdkZUdW1NUDlVMnNreFVYcHZac1A1RkJKMVJqSFhBV2JnQ2NPS0k2dHRmZEFWSG9UaUxROG9DSnhN?oc=5" target="_blank" rel="noopener" style="--dot: #8A6B8A">
           <span class="hl-label">Tarkkailtavat brändit</span>
-          <span class="hl-title">Diageo proposes 150 job cuts in Ireland - The Spirits Business</span>
+          <span class="hl-title">Diageo proposes 150 job cuts in Ireland - thespiritsbusiness.com</span>
         </a>
         <a class="hl-card" href="https://news.google.com/rss/articles/CBMipgFBVV95cUxNRDR6M2hEbVVDc2lnbkxjZ1F3Z09RMlVVbHRNUUhrTjZydVlzNHdQbG85d3NraWxxbjJOU01KamltUno4VEtOUWtidS1rQXMxQ0xpMTdBeHVmUnZNZzBXbHhKRldfWlhYT1QwNTdkTUc0bjluVnRUWWpOVmRibk0ySXpTVXoxaXk3LXozcnd3cS11UnpNYWt6eUw5Z2tCWTFYRnJSSVR3?oc=5" target="_blank" rel="noopener" style="--dot: #4E7A94">
           <span class="hl-label">Kilpailijat</span>
@@ -166,16 +191,16 @@
           <p class="item-meta">Financial Times · 17.9. klo 15:07</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNV0pLMTZiZGQ3NkJQUUIwbnd3bGM3ZEdQUDNoSlo4UU81UlFIVFpoXzluNlM1d1MzTnY2UXVSM0JBeTZLZG5VN0VQVndncktyQ1FiTnJDNmgySVJmRHpzbVV2VktRSGFHMlRkQ3NaQXIzazFxUFpLblJMZThRRkxid0JIZlFDejJsRldV?oc=5" target="_blank" rel="noopener">Dates set for three-week Diageo strikes - The Spirits Business</a>
-          <p class="item-meta">The Spirits Business · 18.9. klo 10:02</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNV0pLMTZiZGQ3NkJQUUIwbnd3bGM3ZEdQUDNoSlo4UU81UlFIVFpoXzluNlM1d1MzTnY2UXVSM0JBeTZLZG5VN0VQVndncktyQ1FiTnJDNmgySVJmRHpzbVV2VktRSGFHMlRkQ3NaQXIzazFxUFpLblJMZThRRkxid0JIZlFDejJsRldV?oc=5" target="_blank" rel="noopener">Dates set for three-week Diageo strikes - thespiritsbusiness.com</a>
+          <p class="item-meta">thespiritsbusiness.com · 18.9. klo 10:02</p>
         </div>
         <div class="item">
           <a class="item-title" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5ZVWpEYWZ6NEF0NkFnYnNENlZBMnlHZnBiWFFhWWlxbWRTSko1d0hwU3dYR3JDRWlNTGRoZjJMcGpjWFQ1SUpjWG5QSWpxQVViWGp3OVJxS0xlTkg3MDR5THRwRTRWOEdYeWZkQkRGWlI?oc=5" target="_blank" rel="noopener">Diageo strike dates announced - Just Drinks</a>
           <p class="item-meta">Just Drinks · 18.9. klo 01:47</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOR2J3SDNjSVp4bTl0ci1IS1NXamVGYzJlQnV1eDc3dFo2WktPdi15eTZzT2FIUUR4UFNzT2Z5c1NsaklYd3YzdFRYcGVvYmFjOW1WNUI1dkJaSlpIaWYyNkJfMXFSRFI5akU1U0hlWDFRTW5Ob0p3M0M3TFkwTHpPMHE4OXRhWUhQSEN6NWVHUHdJT3U2UlhjcTdDUWs4TGNmV2k4d3ZWNC1RQWRmcW1PeDRXdw?oc=5" target="_blank" rel="noopener">Diageo ‘disappointed’ as scotch whisky production reduction risks strike action - Global Drinks Intel</a>
-          <p class="item-meta">Global Drinks Intel · 17.9. klo 16:26</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOR2J3SDNjSVp4bTl0ci1IS1NXamVGYzJlQnV1eDc3dFo2WktPdi15eTZzT2FIUUR4UFNzT2Z5c1NsaklYd3YzdFRYcGVvYmFjOW1WNUI1dkJaSlpIaWYyNkJfMXFSRFI5akU1U0hlWDFRTW5Ob0p3M0M3TFkwTHpPMHE4OXRhWUhQSEN6NWVHUHdJT3U2UlhjcTdDUWs4TGNmV2k4d3ZWNC1RQWRmcW1PeDRXdw?oc=5" target="_blank" rel="noopener">Diageo ‘disappointed’ as scotch whisky production reduction risks strike action - drinks-intel.com</a>
+          <p class="item-meta">drinks-intel.com · 17.9. klo 16:26</p>
         </div>
           </div>
         </details>
@@ -188,8 +213,8 @@
           <div class="section-body">
             
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxQLXVLTnJNenU3YzZzUWJDN3ZiTmc1SFJpSDlESDlwR00ycllqdUVNMU5tRUp2c0pNUDdZcFpEaUdUVW9MaFNMcVlLcjZsYjZqLU9jdkZUdW1NUDlVMnNreFVYcHZac1A1RkJKMVJqSFhBV2JnQ2NPS0k2dHRmZEFWSG9UaUxROG9DSnhN?oc=5" target="_blank" rel="noopener">Diageo proposes 150 job cuts in Ireland - The Spirits Business</a>
-          <p class="item-meta">The Spirits Business · 24.6. klo 07:00</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxQLXVLTnJNenU3YzZzUWJDN3ZiTmc1SFJpSDlESDlwR00ycllqdUVNMU5tRUp2c0pNUDdZcFpEaUdUVW9MaFNMcVlLcjZsYjZqLU9jdkZUdW1NUDlVMnNreFVYcHZac1A1RkJKMVJqSFhBV2JnQ2NPS0k2dHRmZEFWSG9UaUxROG9DSnhN?oc=5" target="_blank" rel="noopener">Diageo proposes 150 job cuts in Ireland - thespiritsbusiness.com</a>
+          <p class="item-meta">thespiritsbusiness.com · 24.6. klo 07:00</p>
         </div>
         <div class="item">
           <a class="item-title" href="https://news.google.com/rss/articles/CBMifkFVX3lxTFB6OUhNOFFfMHhKYjZPNUJ3YnVtcnZvYXA5TndHOEJsY29aWGUxUHZKdnRrY1A0T1IyTGpNYkY4dTlTRXJkXzhYUjhJTnJrbUJUNkZvN05RTmlBMW5XWjFSWG5vVDdrazNReHlUdlNwM0cxQ0pTUzVrb2k1RDBZUQ?oc=5" target="_blank" rel="noopener">House of Guinness: Where to follow in the family’s footsteps in Ireland - Wanderlust Travel Magazine</a>
@@ -300,8 +325,8 @@
           <p class="item-meta">Forbes · 6.5. klo 07:00</p>
         </div>
         <div class="item">
-          <a class="item-title" href="https://news.google.com/rss/articles/CBMinwFBVV95cUxQeDloaGs2cHZ1dVdHeG5odm1HZmdtZ2RJUlJmZXRaNk03dTR6TXk4QVlRREx1ak1tdDJsWEFDbFQwN2lJdEdHS2RrOXBCNkVxSGh6Y0s0X2tuNlZfLW0xVzd2Nl9KY3BTNFdYdldwOFg4WHBrYWVRb3pzdU9IV3g4cUVyODI2dW16VEJ3V2JZcW80TkFrRVYweE9EMEJIT0U?oc=5" target="_blank" rel="noopener">How India is reversing the alcohol-free cocktail trend - The Spirits Business</a>
-          <p class="item-meta">The Spirits Business · 29.7. klo 07:00</p>
+          <a class="item-title" href="https://news.google.com/rss/articles/CBMinwFBVV95cUxQeDloaGs2cHZ1dVdHeG5odm1HZmdtZ2RJUlJmZXRaNk03dTR6TXk4QVlRREx1ak1tdDJsWEFDbFQwN2lJdEdHS2RrOXBCNkVxSGh6Y0s0X2tuNlZfLW0xVzd2Nl9KY3BTNFdYdldwOFg4WHBrYWVRb3pzdU9IV3g4cUVyODI2dW16VEJ3V2JZcW80TkFrRVYweE9EMEJIT0U?oc=5" target="_blank" rel="noopener">How India is reversing the alcohol-free cocktail trend - thespiritsbusiness.com</a>
+          <p class="item-meta">thespiritsbusiness.com · 29.7. klo 07:00</p>
         </div>
         <div class="item">
           <a class="item-title" href="https://news.google.com/rss/articles/CBMid0FVX3lxTE9NQjU4WEotRXJfTzVjeXlRLVUwRmk2X3NZR3FoRnJ5UU9kRm1zYVhobUdxaHVwSGtqZHZKN1AyeWk2STBRTHlMbUd0Uk5lZmVNbTBxNjJrcjlHX0k3OGdJT3JmNFBXelhyR1BMdFJyV0lxRkRKTElV?oc=5" target="_blank" rel="noopener">The Drink of Summer Is Looking Bright, Bubbly and a Little Predictable - observer.com</a>
@@ -402,7 +427,28 @@
       </div>
     </section>
 
-  <footer>Lähde: Google News · päivittyy automaattisesti</footer>
+  <footer>Lähteet: Google News, The Spirits Business · päivittyy automaattisesti</footer>
 </div>
+<script>
+(function () {
+  var input = document.getElementById('search');
+  if (!input) return;
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase();
+    document.querySelectorAll('.item, .hl-card').forEach(function (el) {
+      var match = q === '' || el.textContent.toLowerCase().indexOf(q) !== -1;
+      el.style.display = match ? '' : 'none';
+    });
+    document.querySelectorAll('.section').forEach(function (section) {
+      var anyVisible = Array.prototype.some.call(
+        section.querySelectorAll('.item'),
+        function (el) { return el.style.display !== 'none'; }
+      );
+      if (q !== '') section.open = anyVisible;
+      section.style.display = (q === '' || anyVisible) ? '' : 'none';
+    });
+  });
+})();
+</script>
 </body>
 </html>
