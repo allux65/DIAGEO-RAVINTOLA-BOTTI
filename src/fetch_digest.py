@@ -56,6 +56,25 @@ TRADE_FEEDS = {
     ],
 }
 
+# Brändiuutisiin yhdistettävät alan kauppalehdet - haetaan niiden tuoreimmat jutut,
+# ja pidetään vain ne joissa mainitaan jokin seuratuista brändeistä.
+FLAGSHIP_TRADE_FEEDS = [
+    ("The Spirits Business", "https://www.thespiritsbusiness.com/feed/"),
+    ("Punch", "https://punchdrink.com/feed/"),
+    ("VinePair", "https://vinepair.com/feed/"),
+]
+
+
+def filter_by_brand_mention(items, brands):
+    """Pitää vain jutut joiden otsikossa mainitaan joku seuratuista brändeistä -
+    käytetään yleisten alan RSS-feedien suodattamiseen brändikohtaisiksi."""
+    kept = []
+    for it in items:
+        title_lower = it["title"].lower()
+        if any(b.lower() in title_lower for b in brands):
+            kept.append(it)
+    return kept
+
 # Muokkaa näitä hakuja vapaasti - jokainen on oma osio sivulla.
 # hl/gl ohjaavat kieltä ja aluetta: fi/FI = suomenkieliset tulokset, en/US = globaalit tulokset.
 QUERIES = {
@@ -236,15 +255,28 @@ def fetch_direct_rss(source_name, url, limit=4):
     return items
 
 
+# Osa brändinimistä on monimerkityksellisiä ja tuottaa väärää osumaa oletushaulla -
+# näille annetaan tarkempi, poissulkeva hakulauseke.
+BRAND_QUERY_OVERRIDES = {
+    "Guinness": (
+        '"Guinness" (beer OR stout OR Diageo OR brewery OR whiskey) '
+        '-"World Record" -"Guinness World Records" -GWR'
+    ),
+}
+
+
 def fetch_flagship_news(brands, seen_titles, per_brand=2, when_days=30):
     """Hakee jokaiselle isolle brändille kohdennetusti uutuuksia, kasvoja ja julkaisuja
     - ei geneeristä 'Diageo'-mainintaa vaan nimenomaan tuote-/markkinointiuutisia."""
     items = []
     for brand in brands:
-        q = (
-            f'"{brand}" ambassador OR "{brand}" "limited edition" OR '
-            f'"{brand}" launch OR "{brand}" campaign OR "{brand}" "new release"'
-        )
+        if brand in BRAND_QUERY_OVERRIDES:
+            q = BRAND_QUERY_OVERRIDES[brand]
+        else:
+            q = (
+                f'"{brand}" ambassador OR "{brand}" "limited edition" OR '
+                f'"{brand}" launch OR "{brand}" campaign OR "{brand}" "new release"'
+            )
         raw = fetch_category(q, hl="en", gl="US", limit=per_brand, when_days=when_days)
         items += dedup_items(raw, seen_titles)
     return items
@@ -558,8 +590,14 @@ def main():
     now_ts = datetime.now(timezone.utc).timestamp()
     seen_titles = set()
 
-    # Brändiuutiset ensin - kohdennetut haut isoimmille brändeille
-    flagship_items = fetch_flagship_news(FLAGSHIP_BRANDS, seen_titles, per_brand=2)[:10]
+    # Brändiuutiset ensin - alan kauppalehdet (laadukkaampia) + kohdennetut Google News -haut
+    trade_flagship_items = []
+    for source_name, feed_url in FLAGSHIP_TRADE_FEEDS:
+        raw = fetch_direct_rss(source_name, feed_url, limit=20)
+        matched = filter_by_brand_mention(raw, FLAGSHIP_BRANDS)
+        trade_flagship_items += dedup_items(matched, seen_titles)
+    gnews_flagship_items = fetch_flagship_news(FLAGSHIP_BRANDS, seen_titles, per_brand=2)
+    flagship_items = (trade_flagship_items + gnews_flagship_items)[:10]
     all_results[FLAGSHIP_LABEL] = flagship_items
     record_history(history, flagship_items, FLAGSHIP_LABEL, now_ts)
 
