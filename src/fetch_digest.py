@@ -5,10 +5,12 @@ Tallentaa myös kaiken data/history.json-tiedostoon kuukausiyhteenvetoa varten.
 """
 import feedparser
 import json
+import urllib.request
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from html import escape
-from email.utils import parsedate_to_datetime
+from email.utils import parsedate_to_datetime, format_datetime
+from urllib.parse import quote, urlencode
 
 BASE = Path(__file__).resolve().parent.parent
 DOCS = BASE / "docs"
@@ -102,7 +104,7 @@ QUERIES = {
         "when_days": 14,
     },
     "Suomen ravintola-alan uutiset": {
-        "q": "ravintola-ala Suomi",
+        "q": '"ravintola-ala" Suomi',
         "hl": "fi",
         "gl": "FI",
         "when_days": 14,
@@ -236,6 +238,79 @@ def fetch_category(query, hl="fi", gl="FI", limit=4, when_days=14):
     return items
 
 
+def fetch_bing_news(query, limit=4, when_days=14):
+    """Hakee Bing Newsista - eri hakukone kuin Google, tuo eri lähteitä ja
+    eri kattavuutta. Ei vaadi API-avainta, sama RSS-temppu kuin Google Newsille."""
+    try:
+        url = f"https://www.bing.com/news/search?q={quote(query)}&format=RSS"
+        feed = feedparser.parse(url)
+    except Exception:
+        return []
+    items = []
+    for entry in feed.entries[:limit]:
+        items.append(
+            {
+                "title": entry.get("title", ""),
+                "link": entry.get("link", ""),
+                "published": entry.get("published", ""),
+                "source": entry.get("source", {}).get("title", "") if entry.get("source") else "Bing News",
+            }
+        )
+    return items
+
+
+def _parse_gdelt_date(seendate):
+    """GDELT antaa päivämäärät muodossa '20260917T091500Z' - muunnetaan samaan
+    RFC822-muotoon jota format_date() jo osaa käsitellä."""
+    try:
+        dt = datetime.strptime(seendate, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc)
+        return format_datetime(dt)
+    except Exception:
+        return ""
+
+
+def fetch_gdelt(query, limit=4, when_days=14):
+    """Hakee GDELT-projektista - ilmainen, avoin uutisindeksi joka kattaa
+    kymmeniä tuhansia lähteitä ympäri maailman, päivittyy 15 min välein.
+    Ei vaadi API-avainta. Lähimpänä 'koko internetin' hakua mitä ilmaiseksi saa."""
+    params = {
+        "query": query,
+        "mode": "artlist",
+        "maxrecords": limit,
+        "format": "json",
+        "sort": "datedesc",
+        "timespan": f"{when_days}d",
+    }
+    url = "https://api.gdeltproject.org/api/v2/doc/doc?" + urlencode(params)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8", errors="ignore"))
+    except Exception:
+        return []
+    items = []
+    for art in data.get("articles", [])[:limit]:
+        items.append(
+            {
+                "title": art.get("title", ""),
+                "link": art.get("url", ""),
+                "published": _parse_gdelt_date(art.get("seendate", "")),
+                "source": art.get("domain", "GDELT"),
+            }
+        )
+    return items
+
+
+def fetch_multi_source(query, hl="fi", gl="FI", limit=4, when_days=14):
+    """Yhdistää Google Newsin, Bing Newsin ja GDELT:n samalle haulle -
+    huomattavasti laajempi kattavuus kuin yksi lähde yksinään."""
+    items = []
+    items += fetch_category(query, hl=hl, gl=gl, limit=limit, when_days=when_days)
+    items += fetch_bing_news(query, limit=limit, when_days=when_days)
+    items += fetch_gdelt(query, limit=limit, when_days=when_days)
+    return items
+
+
 def fetch_direct_rss(source_name, url, limit=4):
     """Hakee suoraan yhdestä RSS-feedistä (ei Google News -wrapperia)."""
     try:
@@ -277,7 +352,7 @@ def fetch_flagship_news(brands, seen_titles, per_brand=2, when_days=30):
                 f'"{brand}" ambassador OR "{brand}" "limited edition" OR '
                 f'"{brand}" launch OR "{brand}" campaign OR "{brand}" "new release"'
             )
-        raw = fetch_category(q, hl="en", gl="US", limit=per_brand, when_days=when_days)
+        raw = fetch_multi_source(q, hl="en", gl="US", limit=per_brand, when_days=when_days)
         items += dedup_items(raw, seen_titles)
     return items
 
