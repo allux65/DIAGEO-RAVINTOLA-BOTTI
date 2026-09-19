@@ -710,5 +710,37 @@
     "source": "Eurasia Business News",
     "category": "Väkevien alan uutiset ja ennusteet",
     "fetched_at": 1789802007.032176
+  },
+  {
+    "title": "My blue lagoon",
+    "link": "https://www.reddit.com/r/cocktails/comments/1wjz5r0/my_blue_lagoon/",
+    "published": "2026-09-18T19:01:38+00:00",
+    "source": "Reddit",
+    "category": "Some ja yhteisökeskustelu (Reddit)",
+    "fetched_at": 1789803700.134833
+  },
+  {
+    "title": "Whiskey Iceberg",
+    "link": "https://www.reddit.com/r/whiskey/comments/1wja7c2/whiskey_iceberg/",
+    "published": "2026-09-17T23:45:05+00:00",
+    "source": "Reddit",
+    "category": "Some ja yhteisökeskustelu (Reddit)",
+    "fetched_at": 1789803700.134833
+  },
+  {
+    "title": "A Lion's Tail, but cheaper",
+    "link": "https://www.reddit.com/r/cocktails/comments/1wj9tki/a_lions_tail_but_cheaper/",
+    "published": "2026-09-17T23:28:04+00:00",
+    "source": "Reddit",
+    "category": "Some ja yhteisökeskustelu (Reddit)",
+    "fetched_at": 1789803700.134833
+  },
+  {
+    "title": "Review: Clynelish 14 Years Old Cask Strength Trader Joe's 2004 (54.6%)",
+    "link": "https://www.reddit.com/r/whiskey/comments/1wj3bij/review_clynelish_14_years_old_cask_strength/",
+    "published": "2026-09-17T19:13:25+00:00",
+    "source": "Reddit",
+    "category": "Some ja yhteisökeskustelu (Reddit)",
+    "fetched_at": 1789803700.134833
   }
 ]
