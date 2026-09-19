@@ -16,8 +16,8 @@ DATA_FILE = BASE / "data" / "history.json"
 
 FINNISH_MONTHS_SHORT = None  # placeholder, we use numeric dd.mm. format instead
 
-# Väripiste per kategoria - kulta/pronssi-sävyt, yhtenäinen ja tyylikäs kirjavuuden sijaan
-ACCENTS = ["#C9A227", "#8C6B3F"]
+# Väripiste per kategoria - kupari/metsänvihreä, JW Green Label & Roe & Co -henkinen
+ACCENTS = ["#A8672E", "#3E5A4E"]
 
 
 def format_date(raw):
@@ -66,7 +66,7 @@ QUERIES = {
         "hl": "en",
         "gl": "US",
     },
-    "Kilpailijat": {
+    "Muut toimijat": {
         "q": '"Pernod Ricard" OR "Bacardi" OR "Brown-Forman" OR "Suntory" OR "Campari Group"',
         "hl": "en",
         "gl": "US",
@@ -101,57 +101,73 @@ QUERIES = {
 
 DRINKS = [
     # Talvi
-    {"season": "talvi", "tag": "Lämmittävä klassikko", "name": "Savustettu Old Fashioned",
-     "note": "Sopii pimeään kauteen ja joulun ympärille.",
-     "base": "Viski 5cl", "mixer": "Siirappi, angostura", "finish": "Savustettu appelsiininkuori"},
-    {"season": "talvi", "tag": "Ilta-annos", "name": "Espresso Martini -variaatio",
-     "note": "Ikivihreä, toimii erityisesti pimeän kauden ilta-annoksena.",
-     "base": "Vodka 4cl, kahvilikööri 2cl", "mixer": "Tuore espresso", "finish": "Kolme kahvipapua"},
-    {"season": "talvi", "tag": "Comfort drink", "name": "Konjakki-Toddy",
-     "note": "Kuuma, rauhoittava - toimii myös alkoholittomana pohjalla.",
-     "base": "Viski 4cl", "mixer": "Kuuma vesi, hunaja, sitruuna", "finish": "Kanelitanko"},
-    {"season": "talvi", "tag": "Juhlava", "name": "Joulupippuri Sour",
-     "note": "Terävä ja mausteinen, hyvä lisä joulusesongin listalle.",
-     "base": "Gin 4cl", "mixer": "Sitruuna, siirappi, valkuainen", "finish": "Rouhittu mustapippuri"},
+    {"season": "talvi", "tag": "Lämmittävä klassikko", "name": "Smoked Walker Old Fashioned",
+     "ingredients": ["Johnnie Walker Black Label 5cl", "Demerara-siirappi 1cl", "Angostura Bitters 2 tirskausta"],
+     "glass": "Tumbler", "garnish": "Savustettu appelsiininkuori",
+     "method": "Sekoita jäillä n. 30 sekuntia, siivilöi ison jääkuution päälle."},
+    {"season": "talvi", "tag": "Ilta-annos", "name": "Baileys Espresso Martini",
+     "ingredients": ["Baileys Original Irish Cream 3cl", "Smirnoff No. 21 Vodka 3cl", "Tuore espresso 3cl"],
+     "glass": "Martini-lasi", "garnish": "3 kahvipapua",
+     "method": "Shake kovaa jäillä 15 sekuntia, siivilöi kylmään lasiin."},
+    {"season": "talvi", "tag": "Comfort drink", "name": "Bulleit Hot Toddy",
+     "ingredients": ["Bulleit Bourbon 4cl", "Hunaja 1,5cl", "Kuuma vesi 8cl", "Sitruunamehu 1cl"],
+     "glass": "Toddy-lasi", "garnish": "Kanelitanko, neilikka",
+     "method": "Sekoita ainekset kuumaan lasiin, tarjoile heti."},
+    {"season": "talvi", "tag": "Juhlava", "name": "Tanqueray Winter Sour",
+     "ingredients": ["Tanqueray London Dry Gin 4cl", "Tuore sitruuna 2cl", "Siirappi 1,5cl", "Valkuainen 1kpl"],
+     "glass": "Coupe-lasi", "garnish": "Rouhittu mustapippuri",
+     "method": "Dry shake ilman jäätä, sitten shake jäillä, siivilöi."},
     # Kevät
-    {"season": "kevät", "tag": "Raikas", "name": "Yrttinen Gin Fizz",
-     "note": "Kevyt ja raikas, hyödyntää kevään yrttejä listalla.",
-     "base": "Gin 4cl", "mixer": "Sooda, sitruuna", "finish": "Tuore tilli tai minttu"},
-    {"season": "kevät", "tag": "Kausituote", "name": "Rabarperi Collins",
-     "note": "Suomalainen kevätrabarperi tuo paikallisen twistin klassikkoon.",
-     "base": "Vodka 4cl", "mixer": "Rabarperisiirappi, sooda", "finish": "Rabarperitikku"},
-    {"season": "kevät", "tag": "Kevyt", "name": "Elderflower Highball",
-     "note": "Kukkainen ja matalakalorinen, sopii aperitiiviksi.",
-     "base": "Gin 4cl", "mixer": "Sambuca-sooda, samppanjahiiva-liköri", "finish": "Sitruunatwist"},
-    {"season": "kevät", "tag": "Yrttinen", "name": "Basil Smash -variaatio",
-     "note": "Tuoreen yrtin ja sitruksen tasapaino, näyttää hyvältä lasissa.",
-     "base": "Gin 4cl", "mixer": "Sitruuna, siirappi", "finish": "Tuore basilika"},
+    {"season": "kevät", "tag": "Kausituote", "name": "Ketel One Rhubarb Collins",
+     "ingredients": ["Ketel One Vodka 4cl", "Rabarperisiirappi 2cl", "Tuore sitruuna 1,5cl", "Sooda täytteeksi"],
+     "glass": "Collins-lasi", "garnish": "Rabarperitikku",
+     "method": "Rakenna jään päälle, täytä soodalla, sekoita kevyesti."},
+    {"season": "kevät", "tag": "Raikas", "name": "Tanqueray Herb Fizz",
+     "ingredients": ["Tanqueray London Dry Gin 4cl", "Tuore sitruuna 2cl", "Siirappi 1,5cl", "Sooda täytteeksi"],
+     "glass": "Highball-lasi", "garnish": "Tuore tilli",
+     "method": "Shake perusaineet jäillä, siivilöi jäille, täytä soodalla."},
+    {"season": "kevät", "tag": "Kevyt", "name": "Don Julio Blanco Paloma",
+     "ingredients": ["Don Julio Blanco Tequila 4cl", "Greippisooda 8cl", "Tuore limetti 1cl"],
+     "glass": "Highball-lasi", "garnish": "Suolareunus, limettiviipale",
+     "method": "Rakenna jään päälle, sekoita kevyesti."},
+    {"season": "kevät", "tag": "Yrttinen", "name": "Ketel One Basil Smash",
+     "ingredients": ["Ketel One Vodka 4cl", "Tuore sitruuna 1,5cl", "Siirappi 1cl", "Tuore basilika 6 lehteä"],
+     "glass": "Tumbler", "garnish": "Basilikanoksa",
+     "method": "Muserra basilika lasin pohjalle, shake loput ainekset jäillä, siivilöi jäille."},
     # Kesä
-    {"season": "kesä", "tag": "Low & no", "name": "Matala-alkoholinen spritz",
-     "note": "Vastaa low/no-trendiin kesäterassilla ilman että makuprofiili kärsii.",
-     "base": "Aperitiivi 3cl", "mixer": "Kuohuva, soodaa", "finish": "Appelsiiniviipale"},
-    {"season": "kesä", "tag": "Terassiklassikko", "name": "Highball-klassikko",
-     "note": "Japanilaistyylinen highball - kevyt ja helposti skaalattava terassikäyttöön.",
-     "base": "Viski 4cl", "mixer": "Runsaasti soodaa", "finish": "Sitruunatwist"},
-    {"season": "kesä", "tag": "Kesäjuhla", "name": "Vesimeloni-Margarita",
-     "note": "Näyttävä ja kesäinen, toimii hyvin myös isommille pöytäseurueille.",
-     "base": "Tequila 4cl", "mixer": "Tuore vesimelonimehu, limetti", "finish": "Suolareunus"},
-    {"season": "kesä", "tag": "Raikas", "name": "Kurkku-Gin Collins",
-     "note": "Kevyt ja raikas, suosittu erityisesti lounasaikaan.",
-     "base": "Gin 4cl", "mixer": "Kurkkumehu, sooda, limetti", "finish": "Kurkkuviipale"},
+    {"season": "kesä", "tag": "Low & no", "name": "Seedlip Garden Spritz",
+     "ingredients": ["Seedlip Garden 108 4cl", "Kuohuvesi tai kuohuviini 6cl", "Sooda 2cl"],
+     "glass": "Viinilasi", "garnish": "Appelsiiniviipale, rosmariininoksa",
+     "method": "Rakenna jään päälle, sekoita kevyesti. Alkoholiton vaihtoehto listalle."},
+    {"season": "kesä", "tag": "Terassiklassikko", "name": "Johnnie Walker Highball",
+     "ingredients": ["Johnnie Walker Black Label 4cl", "Runsaasti soodaa"],
+     "glass": "Highball-lasi", "garnish": "Sitruunatwist",
+     "method": "Täytä lasi jäällä, kaada viski, täytä soodalla varovasti sekoittaen."},
+    {"season": "kesä", "tag": "Kesäjuhla", "name": "Don Julio Watermelon Margarita",
+     "ingredients": ["Don Julio Blanco Tequila 4cl", "Tuore vesimelonimehu 4cl", "Tuore limetti 2cl", "Agavesiirappi 1cl"],
+     "glass": "Margarita-lasi", "garnish": "Suolareunus, vesimelonipala",
+     "method": "Shake kaikki ainekset jäillä, siivilöi jäille."},
+    {"season": "kesä", "tag": "Raikas", "name": "Ketel One Cucumber Collins",
+     "ingredients": ["Ketel One Vodka 4cl", "Kurkkumehu 3cl", "Tuore limetti 1,5cl", "Sooda täytteeksi"],
+     "glass": "Collins-lasi", "garnish": "Kurkkuviipale",
+     "method": "Rakenna jään päälle, täytä soodalla."},
     # Syksy
-    {"season": "syksy", "tag": "Syksyn suosikki", "name": "Savustettu Mule",
-     "note": "Moscow Mulen syksyinen versio - helppo lisä listalle sellaisenaan.",
-     "base": "Vodka 4cl", "mixer": "Inkiväärikaljaa, limeä", "finish": "Savustettu rosmariini"},
-    {"season": "syksy", "tag": "Kausituote", "name": "Omena-Old Fashioned",
-     "note": "Syksyinen twist klassikkoon, sopii ruokalistan kausivaihtoon.",
-     "base": "Viski 5cl", "mixer": "Omenasiirappi, angostura", "finish": "Kaneli"},
-    {"season": "syksy", "tag": "Ylellinen", "name": "Viikuna-Saksanpähkinä Old Fashioned",
-     "note": "Syvä ja pähkinäinen, sopii hyvin illallisen jälkeiseksi.",
-     "base": "Viski 5cl", "mixer": "Viikunasiirappi, angostura", "finish": "Saksanpähkinän kuori"},
-    {"season": "syksy", "tag": "Mausteinen", "name": "Chai-Espresso Martini",
-     "note": "Espresso Martinin mausteinen syksyversio - erottuu listalla.",
-     "base": "Vodka 4cl, kahvilikööri 2cl", "mixer": "Tuore espresso, chai-siirappi", "finish": "Rouhittu kardemumma"},
+    {"season": "syksy", "tag": "Syksyn suosikki", "name": "Captain Morgan Spiced Mule",
+     "ingredients": ["Captain Morgan Spiced Gold 4cl", "Inkiväärikaljaa 8cl", "Tuore limetti 1cl"],
+     "glass": "Kuparimuki tai highball", "garnish": "Savustettu rosmariininoksa",
+     "method": "Rakenna jään päälle, täytä inkiväärikaljalla."},
+    {"season": "syksy", "tag": "Kausituote", "name": "Johnnie Walker Apple Old Fashioned",
+     "ingredients": ["Johnnie Walker Black Label 5cl", "Omenasiirappi 1,5cl", "Angostura Bitters 2 tirskausta"],
+     "glass": "Tumbler", "garnish": "Omenaviipale, kaneli",
+     "method": "Sekoita jäillä, siivilöi ison jääkuution päälle."},
+    {"season": "syksy", "tag": "Ylellinen", "name": "Casamigos Fig & Walnut Old Fashioned",
+     "ingredients": ["Casamigos Reposado Tequila 5cl", "Viikunasiirappi 1,5cl", "Angostura Bitters 2 tirskausta"],
+     "glass": "Tumbler", "garnish": "Saksanpähkinän kuori",
+     "method": "Sekoita jäillä, siivilöi ison jääkuution päälle."},
+    {"season": "syksy", "tag": "Mausteinen", "name": "Baileys Chai Espresso Martini",
+     "ingredients": ["Baileys Original Irish Cream 3cl", "Smirnoff No. 21 Vodka 2cl", "Tuore espresso 3cl", "Chai-siirappi 1cl"],
+     "glass": "Martini-lasi", "garnish": "Rouhittu kardemumma",
+     "method": "Shake kovaa jäillä, siivilöi kylmään lasiin."},
 ]
 
 SEASON_BY_MONTH = {
@@ -292,7 +308,7 @@ def render_highlights(all_results):
         if not items:
             continue
         top = items[0]
-        color = "var(--wine)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
+        color = "var(--teal)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
         cards += f"""
         <a class="hl-card" href="{escape(top['link'])}" target="_blank" rel="noopener" style="--dot: {color}">
           <span class="hl-label">{escape(label)}</span>
@@ -317,7 +333,7 @@ def build_html(all_results, drinks, season, updated_at, trending):
 
     sections_html = ""
     for i, (label, items) in enumerate(all_results.items()):
-        color = "var(--wine)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
+        color = "var(--teal)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
         # Brändiuutiset ja kolme ensimmäistä auki oletuksena, loput kiinni (klikillä auki)
         open_attr = "open" if (label == FLAGSHIP_LABEL or i < 3) else ""
         sections_html += f"""
@@ -334,15 +350,16 @@ def build_html(all_results, drinks, season, updated_at, trending):
 
     drink_cards = ""
     for d in drinks:
+        ingredients_html = "".join(f"<li>{escape(i)}</li>" for i in d["ingredients"])
         drink_cards += f"""
         <div class="drink">
           <span class="drink-tag">{escape(d['tag'])}</span>
           <div class="drink-name">{escape(d['name'])}</div>
-          <p class="drink-note">{escape(d['note'])}</p>
-          <div class="drink-specs">
-            <div><span>Pohja</span>{escape(d['base'])}</div>
-            <div><span>Lisäys</span>{escape(d['mixer'])}</div>
-            <div><span>Viimeistely</span>{escape(d['finish'])}</div>
+          <ul class="drink-ingredients">{ingredients_html}</ul>
+          <p class="drink-method">{escape(d['method'])}</p>
+          <div class="drink-meta">
+            <span><strong>Lasi:</strong> {escape(d['glass'])}</span>
+            <span><strong>Koristelu:</strong> {escape(d['garnish'])}</span>
           </div>
         </div>"""
 
@@ -365,8 +382,8 @@ def build_html(all_results, drinks, season, updated_at, trending):
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {{
-    --bg: #100D0A; --bg-raised: #1A1510; --ink: #F2E9DA; --ink-dim: #9C8D78;
-    --copper: #C9A227; --wine: #8B3A3A; --line: #2B241D;
+    --bg: #F3F5EF; --bg-raised: #FFFFFF; --ink: #17332B; --ink-dim: #5F6F67;
+    --copper: #A8672E; --teal: #2E6358; --line: #DDE3DC;
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
@@ -434,16 +451,20 @@ def build_html(all_results, drinks, season, updated_at, trending):
 
   /* Drinkki */
   .drink-wrap {{ margin-top: 28px; }}
-  .drink-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }}
+  .drink-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }}
   .drink {{ background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }}
   .drink-tag {{
     display: inline-block; font-size: 11px; color: var(--copper); border: 1px solid var(--copper);
     border-radius: 999px; padding: 2px 9px; margin-bottom: 10px;
   }}
-  .drink-name {{ font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; margin-bottom: 6px; }}
-  .drink-note {{ color: var(--ink-dim); font-size: 13.5px; margin-bottom: 14px; }}
-  .drink-specs {{ display: flex; flex-direction: column; gap: 8px; font-size: 13px; }}
-  .drink-specs div span {{ display: block; color: var(--ink-dim); font-size: 11px; margin-bottom: 2px; }}
+  .drink-name {{ font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; margin-bottom: 12px; }}
+  .drink-ingredients {{ list-style: none; margin-bottom: 12px; }}
+  .drink-ingredients li {{
+    font-size: 13.5px; padding: 5px 0 5px 14px; border-left: 2px solid var(--line); margin-bottom: 2px;
+  }}
+  .drink-method {{ color: var(--ink-dim); font-size: 13px; margin-bottom: 14px; line-height: 1.5; }}
+  .drink-meta {{ display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--ink-dim); border-top: 1px solid var(--line); padding-top: 10px; }}
+  .drink-meta strong {{ color: var(--ink); font-weight: 500; }}
 
   footer {{ color: var(--ink-dim); font-size: 12.5px; margin-top: 32px; }}
 </style>
@@ -453,7 +474,7 @@ def build_html(all_results, drinks, season, updated_at, trending):
   <header>
     <div class="kicker">Päivitetty {escape(updated_at)}</div>
     <h1>Diageo & Alcohol Industry News</h1>
-    <p class="subhead">Brändiuutiset, kilpailijat ja ravintolakentän liikkeet samassa näkymässä.</p>
+    <p class="subhead">Brändiuutiset ja ravintolakentän liikkeet samassa näkymässä.</p>
   </header>
 
   {trending_html}
