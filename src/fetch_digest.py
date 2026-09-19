@@ -73,10 +73,10 @@ QUERIES = {
         "gl": "US",
         "when_days": 14,
     },
-    "Uudet ravintolat ja baarit Helsingissä": {
+    "Uudet ravintolat ja baarit Suomessa": {
         "q": (
-            '"uusi ravintola" Helsinki OR "uusi baari" Helsinki OR '
-            '"avasi ovensa" Helsinki OR "avautui Helsinkiin" OR "avannut" ravintola Helsinki'
+            '("uusi ravintola" OR "uusi baari" OR "avasi ovensa") '
+            "(Helsinki OR Espoo OR Vantaa OR Tampere OR Turku OR Oulu OR Jyväskylä)"
         ),
         "hl": "fi",
         "gl": "FI",
