@@ -1046,5 +1046,29 @@
     "source": "Yahoo",
     "category": "Alan tapahtumat maailmalla",
     "fetched_at": 1789804805.49367
+  },
+  {
+    "title": "‘Everybody Is Drinking Guinness.’ We Know Why.",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6aae4266ff2141f3ba1d9eb6816128b7&url=https%3a%2f%2fwww.nytimes.com%2f2024%2f12%2f03%2fdining%2fdrinks%2fguinness.html&c=8635835049584318231&mkt=en-us",
+    "published": "Tue, 03 Dec 2024 02:02:00 GMT",
+    "source": "Bing News",
+    "category": "Brändiuutiset: uutuudet, kasvot & julkaisut",
+    "fetched_at": 1789805143.626166
+  },
+  {
+    "title": "With $97M London Brewery, Guinness Steps Up Global Plan to Win New Fans",
+    "link": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6aae4266ff2141f3ba1d9eb6816128b7&url=https%3a%2f%2fwww.adweek.com%2fcreativity%2fwith-97m-london-brewery-guinness-steps-up-global-plan-to-win-new-fans%2f&c=11261254943722271823&mkt=en-us",
+    "published": "Thu, 11 Dec 2025 07:29:00 GMT",
+    "source": "Bing News",
+    "category": "Brändiuutiset: uutuudet, kasvot & julkaisut",
+    "fetched_at": 1789805143.626166
+  },
+  {
+    "title": "Suomessa on edelleen eniten työttömiä koko EU-alueella. Asiantuntijat ovat löytäneet Suomen työttömyystilanteelle monta syytä. Lue lisää: https://www.mtvuutiset.fi/artikkeli/karu-kuva-suomi-ykkosena-huonossa-joukossa/9387840 - facebook.com",
+    "link": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQR2pma21vd1BRbjZnel9Na0NzV0hlVFRkMVVpaHFRRUtNNFpHazN5WktOTWdtTXUxSl83TW5QUUxrdUgxWGxINEdqUHp4OTN6b2xPOWFrSFk0b0tROU9teVhWbHBjc2xMSlAtTlhSV0Rma01tV3U2U1dMeFNUbkhtRWlEQ0w3UG9QTU9rNHkyN1JaVENZZDBSd0ZjVmI1OTNCTXNNRmc2Zm1VTG9lU2w1NHUtcU55WWRaNlY3a1NMZ0ZvNXB4SEpLYlBISVdCaDNuV1kxdjhyck5XUkI1SlV3VEpMU0lweEJyU2Fqd0ZXU0xsdkpMNmZYYg?oc=5",
+    "published": "Sun, 06 Sep 2026 10:03:03 GMT",
+    "source": "facebook.com",
+    "category": "Suomen ravintola-alan uutiset",
+    "fetched_at": 1789805143.626166
   }
 ]
