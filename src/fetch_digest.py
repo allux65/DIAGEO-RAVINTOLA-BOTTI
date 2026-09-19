@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from html import escape
 from email.utils import parsedate_to_datetime
+from urllib.parse import quote
 
 BASE = Path(__file__).resolve().parent.parent
 DOCS = BASE / "docs"
@@ -47,6 +48,19 @@ FLAGSHIP_BRANDS = [
 ]
 FLAGSHIP_LABEL = "Brändiuutiset: uutuudet, kasvot & julkaisut"
 OTHER_BRANDS = [b for b in BRANDS if b not in FLAGSHIP_BRANDS]
+
+SOCIAL_LABEL = "Some ja yhteisökeskustelu (Reddit)"
+# Reddit tarjoaa ilmaisen RSS-haun ilman API-avainta - Instagram/TikTok eivät.
+# Rajattu alan yhteisöihin jotta tulokset pysyvät relevantteina.
+REDDIT_SUBS = "cocktails+bourbon+whisky+whiskey+rum+bartenders+tequila+gin"
+
+
+def build_reddit_url(brands, limit=10):
+    q = " OR ".join(f'"{b}"' for b in brands)
+    return (
+        f"https://www.reddit.com/r/{REDDIT_SUBS}/search.rss"
+        f"?q={quote(q)}&restrict_sr=1&sort=new&limit={limit}"
+    )
 
 # Suorat RSS-feedit alan omista kauppalehdistä - laadukkaampia kuin Google Newsin
 # yleishaku. Nämä yhdistetään "Väkevien alan uutiset"-kategoriaan Google Newsin lisäksi.
@@ -308,7 +322,12 @@ def render_highlights(all_results):
         if not items:
             continue
         top = items[0]
-        color = "var(--teal)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
+        if label == FLAGSHIP_LABEL:
+            color = "var(--teal)"
+        elif label == SOCIAL_LABEL:
+            color = "#B8862E"
+        else:
+            color = ACCENTS[i % len(ACCENTS)]
         cards += f"""
         <a class="hl-card" href="{escape(top['link'])}" target="_blank" rel="noopener" style="--dot: {color}">
           <span class="hl-label">{escape(label)}</span>
@@ -333,9 +352,14 @@ def build_html(all_results, drinks, season, updated_at, trending):
 
     sections_html = ""
     for i, (label, items) in enumerate(all_results.items()):
-        color = "var(--teal)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
-        # Brändiuutiset ja kolme ensimmäistä auki oletuksena, loput kiinni (klikillä auki)
-        open_attr = "open" if (label == FLAGSHIP_LABEL or i < 3) else ""
+        if label == FLAGSHIP_LABEL:
+            color = "var(--teal)"
+        elif label == SOCIAL_LABEL:
+            color = "#B8862E"
+        else:
+            color = ACCENTS[i % len(ACCENTS)]
+        # Brändiuutiset, some ja kolme ensimmäistä auki oletuksena, loput kiinni (klikillä auki)
+        open_attr = "open" if (label in (FLAGSHIP_LABEL, SOCIAL_LABEL) or i < 3) else ""
         sections_html += f"""
         <details class="section" {open_attr}>
           <summary class="section-head" style="--dot: {color}">
@@ -540,6 +564,13 @@ def main():
     flagship_items = fetch_flagship_news(FLAGSHIP_BRANDS, seen_titles, per_brand=2)[:10]
     all_results[FLAGSHIP_LABEL] = flagship_items
     record_history(history, flagship_items, FLAGSHIP_LABEL, now_ts)
+
+    # Some/yhteisökeskustelu heti perään - Reddit, ilmainen eikä vaadi API-avainta
+    social_items = dedup_items(
+        fetch_direct_rss("Reddit", build_reddit_url(FLAGSHIP_BRANDS)), seen_titles
+    )[:8]
+    all_results[SOCIAL_LABEL] = social_items
+    record_history(history, social_items, SOCIAL_LABEL, now_ts)
 
     for label, spec in QUERIES.items():
         trade_items = []
