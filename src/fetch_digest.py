@@ -9,7 +9,6 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from html import escape
 from email.utils import parsedate_to_datetime
-from urllib.parse import quote
 
 BASE = Path(__file__).resolve().parent.parent
 DOCS = BASE / "docs"
@@ -49,19 +48,6 @@ FLAGSHIP_BRANDS = [
 FLAGSHIP_LABEL = "Brändiuutiset: uutuudet, kasvot & julkaisut"
 OTHER_BRANDS = [b for b in BRANDS if b not in FLAGSHIP_BRANDS]
 
-SOCIAL_LABEL = "Some ja yhteisökeskustelu (Reddit)"
-# Reddit tarjoaa ilmaisen RSS-haun ilman API-avainta - Instagram/TikTok eivät.
-# Rajattu alan yhteisöihin jotta tulokset pysyvät relevantteina.
-REDDIT_SUBS = "cocktails+bourbon+whisky+whiskey+rum+bartenders+tequila+gin"
-
-
-def build_reddit_url(brands, limit=10):
-    q = " OR ".join(f'"{b}"' for b in brands)
-    return (
-        f"https://www.reddit.com/r/{REDDIT_SUBS}/search.rss"
-        f"?q={quote(q)}&restrict_sr=1&sort=new&limit={limit}"
-    )
-
 # Suorat RSS-feedit alan omista kauppalehdistä - laadukkaampia kuin Google Newsin
 # yleishaku. Nämä yhdistetään "Väkevien alan uutiset"-kategoriaan Google Newsin lisäksi.
 TRADE_FEEDS = {
@@ -73,43 +59,58 @@ TRADE_FEEDS = {
 # Muokkaa näitä hakuja vapaasti - jokainen on oma osio sivulla.
 # hl/gl ohjaavat kieltä ja aluetta: fi/FI = suomenkieliset tulokset, en/US = globaalit tulokset.
 QUERIES = {
-    "Diageo Suomessa": {"q": '"Diageo" Suomi', "hl": "fi", "gl": "FI"},
-    "Diageo maailmalla": {"q": '"Diageo"', "hl": "en", "gl": "US"},
+    "Diageo Suomessa": {"q": '"Diageo" Suomi', "hl": "fi", "gl": "FI", "when_days": 7},
+    "Diageo maailmalla": {"q": '"Diageo"', "hl": "en", "gl": "US", "when_days": 7},
     "Muut tarkkailtavat brändit": {
         "q": " OR ".join(f'"{b}"' for b in OTHER_BRANDS),
         "hl": "en",
         "gl": "US",
+        "when_days": 14,
     },
     "Muut toimijat": {
         "q": '"Pernod Ricard" OR "Bacardi" OR "Brown-Forman" OR "Suntory" OR "Campari Group"',
         "hl": "en",
         "gl": "US",
+        "when_days": 14,
     },
-    "Uudet ravintolat ja baarit Suomessa": {
-        "q": '"uusi ravintola" OR "uusi baari" Suomi',
+    "Uudet ravintolat ja baarit Helsingissä": {
+        "q": (
+            '"uusi ravintola" Helsinki OR "uusi baari" Helsinki OR '
+            '"avasi ovensa" Helsinki OR "avautui Helsinkiin" OR "avannut" ravintola Helsinki'
+        ),
         "hl": "fi",
         "gl": "FI",
+        "when_days": 14,
     },
-    "Suomen ravintola-alan uutiset": {"q": "ravintola-ala Suomi", "hl": "fi", "gl": "FI"},
+    "Suomen ravintola-alan uutiset": {
+        "q": "ravintola-ala Suomi",
+        "hl": "fi",
+        "gl": "FI",
+        "when_days": 14,
+    },
     "Cocktail-trendit maailmalla": {
         "q": "cocktail trends OR cocktail trend 2026",
         "hl": "en",
         "gl": "US",
+        "when_days": 30,
     },
     "Väkevien alan uutiset ja ennusteet": {
         "q": "spirits industry news OR drinks industry forecast",
         "hl": "en",
         "gl": "US",
+        "when_days": 30,
     },
     "Suomen alan tapahtumat": {
         "q": '"Helsinki Drink Festival" OR "HDF Week" OR cocktailtapahtuma OR drinkkitapahtuma OR viskitapahtuma OR baarifestivaali',
         "hl": "fi",
         "gl": "FI",
+        "when_days": 45,
     },
     "Alan tapahtumat maailmalla": {
         "q": "cocktail festival OR bar show OR drinks industry awards",
         "hl": "en",
         "gl": "US",
+        "when_days": 45,
     },
 }
 
@@ -192,9 +193,13 @@ SEASON_BY_MONTH = {
 }
 
 
-def fetch_category(query, hl="fi", gl="FI", limit=4):
+def fetch_category(query, hl="fi", gl="FI", limit=4, when_days=14):
+    """Hakee Google Newsista. when_days rajaa tuloksia tuoreuden mukaan
+    (Google Newsin 'when:' operaattori) - ilman tätä haku painottaa relevanssia
+    eikä tuoreutta, jolloin vanhat artikkelit nousevat helposti kärkeen."""
     ceid = f"{gl}:{hl}"
-    url = f"https://news.google.com/rss/search?q={query.replace(' ', '+')}&hl={hl}&gl={gl}&ceid={ceid}"
+    full_query = f"{query} when:{when_days}d"
+    url = f"https://news.google.com/rss/search?q={full_query.replace(' ', '+')}&hl={hl}&gl={gl}&ceid={ceid}"
     feed = feedparser.parse(url)
     items = []
     for entry in feed.entries[:limit]:
@@ -231,7 +236,7 @@ def fetch_direct_rss(source_name, url, limit=4):
     return items
 
 
-def fetch_flagship_news(brands, seen_titles, per_brand=2):
+def fetch_flagship_news(brands, seen_titles, per_brand=2, when_days=30):
     """Hakee jokaiselle isolle brändille kohdennetusti uutuuksia, kasvoja ja julkaisuja
     - ei geneeristä 'Diageo'-mainintaa vaan nimenomaan tuote-/markkinointiuutisia."""
     items = []
@@ -240,7 +245,7 @@ def fetch_flagship_news(brands, seen_titles, per_brand=2):
             f'"{brand}" ambassador OR "{brand}" "limited edition" OR '
             f'"{brand}" launch OR "{brand}" campaign OR "{brand}" "new release"'
         )
-        raw = fetch_category(q, hl="en", gl="US", limit=per_brand)
+        raw = fetch_category(q, hl="en", gl="US", limit=per_brand, when_days=when_days)
         items += dedup_items(raw, seen_titles)
     return items
 
@@ -324,8 +329,6 @@ def render_highlights(all_results):
         top = items[0]
         if label == FLAGSHIP_LABEL:
             color = "var(--teal)"
-        elif label == SOCIAL_LABEL:
-            color = "#B8862E"
         else:
             color = ACCENTS[i % len(ACCENTS)]
         cards += f"""
@@ -352,14 +355,9 @@ def build_html(all_results, drinks, season, updated_at, trending):
 
     sections_html = ""
     for i, (label, items) in enumerate(all_results.items()):
-        if label == FLAGSHIP_LABEL:
-            color = "var(--teal)"
-        elif label == SOCIAL_LABEL:
-            color = "#B8862E"
-        else:
-            color = ACCENTS[i % len(ACCENTS)]
-        # Brändiuutiset, some ja kolme ensimmäistä auki oletuksena, loput kiinni (klikillä auki)
-        open_attr = "open" if (label in (FLAGSHIP_LABEL, SOCIAL_LABEL) or i < 3) else ""
+        color = "var(--teal)" if label == FLAGSHIP_LABEL else ACCENTS[i % len(ACCENTS)]
+        # Brändiuutiset ja kolme ensimmäistä auki oletuksena, loput kiinni (klikillä auki)
+        open_attr = "open" if (label == FLAGSHIP_LABEL or i < 3) else ""
         sections_html += f"""
         <details class="section" {open_attr}>
           <summary class="section-head" style="--dot: {color}">
@@ -565,13 +563,6 @@ def main():
     all_results[FLAGSHIP_LABEL] = flagship_items
     record_history(history, flagship_items, FLAGSHIP_LABEL, now_ts)
 
-    # Some/yhteisökeskustelu heti perään - Reddit, ilmainen eikä vaadi API-avainta
-    social_items = dedup_items(
-        fetch_direct_rss("Reddit", build_reddit_url(FLAGSHIP_BRANDS)), seen_titles
-    )[:8]
-    all_results[SOCIAL_LABEL] = social_items
-    record_history(history, social_items, SOCIAL_LABEL, now_ts)
-
     for label, spec in QUERIES.items():
         trade_items = []
         for source_name, feed_url in TRADE_FEEDS.get(label, []):
@@ -579,7 +570,10 @@ def main():
                 fetch_direct_rss(source_name, feed_url), seen_titles
             )
         gnews_items = dedup_items(
-            fetch_category(spec["q"], hl=spec["hl"], gl=spec["gl"]), seen_titles
+            fetch_category(
+                spec["q"], hl=spec["hl"], gl=spec["gl"], when_days=spec.get("when_days", 14)
+            ),
+            seen_titles,
         )
         items = (trade_items + gnews_items)[:6]
         all_results[label] = items
